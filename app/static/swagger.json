@@ -39,24 +39,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "ingredients": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "instructions": {
-                        "type": "string"
-                      }
-                    }
+                    "$ref": "#/definitions/Recipe"
                   }
                 }
               }
@@ -70,21 +53,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "ingredients": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "instructions": {
-                    "type": "string"
-                  }
-                }
+               "$ref": "#/definitions/Recipe"
               }
             }
           }
@@ -95,24 +64,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "integer"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "ingredients": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "instructions": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/definitions/Recipe"
                 }
               }
             }
@@ -132,6 +84,25 @@
               }
             }
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Recipe": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instructions": {
+          "type": "string"
         }
       }
     }
