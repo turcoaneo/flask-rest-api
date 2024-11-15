@@ -13,11 +13,6 @@ app.config["OPENAPI_URL_PREFIX"] = "/"
 api = Api(app)
 
 
-@app.route("/")
-def home():
-    return "Hello, world!"
-
-
 @app.route('/swagger')
 def get_swagger():
     swag = swagger(app)
