@@ -53,7 +53,7 @@
           "content": {
             "application/json": {
               "schema": {
-               "$ref": "#/definitions/Recipe"
+                "$ref": "#/definitions/RecipeUpdate"
               }
             }
           }
@@ -86,25 +86,187 @@
           }
         }
       }
+    },
+    "/recipe/{id}": {
+      "delete": {
+        "summary": "Get a specific recipe",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful delete operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found to delete by this id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a specific recipe",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful get operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Recipe"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found by this id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a recipe",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/RecipeUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Recipe"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found to update by this id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
     "Recipe": {
       "type": "object",
       "properties": {
-        "name": {
+        "id": {
           "type": "string"
         },
-        "ingredients": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "instructions": {
+        "allOf": {
+          "$ref": "#/definitions/RecipeUpdate"
+      }
+    }
+  },
+  "RecipeUpdate": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "ingredients": {
+        "type": "array",
+        "items": {
           "type": "string"
         }
+      },
+      "instructions": {
+        "type": "string"
       }
     }
   }
+}
 }
