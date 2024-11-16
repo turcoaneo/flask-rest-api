@@ -16,35 +16,37 @@ class Home(MethodView):
         return "Hello, world!"
 
 
+@blueprint.route("/recipe/<string:recipe_id>")
 class Recipe(MethodView):
     @blueprint.response(200, RecipeSchema)
     def get(self, recipe_id):
-        recipe = open_db()["recipe"].get(recipe_id)
+        recipes = open_db()["recipes"]
+        recipe = next((item for item in recipes if item["id"] == recipe_id), None)
         if not recipe:
             abort(404, message="Recipe not found")
         return recipe
 
     @blueprint.arguments(RecipeUpdateSchema)
     @blueprint.response(200, RecipeSchema)
-    def put(self, recipe_data, recipe_id):
-        recipes = open_db()["recipe"]
-        recipe = recipes.get(recipe_id)
-        if not recipe:
+    def put(self, recipe_data, recipe_id): #TODO check again
+        recipes = open_db()["recipes"]
+        index = next((i for i, item in enumerate(recipes) if item["id"] == recipe_id), None)
+        if not index:
             abort(404, message="Recipe not found")
-        recipes.update(recipe_data)
+        recipes[index] = recipe_data
         save_db({"recipes": recipes})
-        return recipe
+        return recipe_data
 
     @blueprint.response(200, description="Recipe deleted")
     def delete(self, recipe_id):
-        recipes = open_db()["recipe"]
-        recipe = recipes.get(recipe_id)
-        if not recipe:
+        recipes = open_db()["recipes"]
+        index = next((i for i, item in enumerate(recipes) if item["id"] == recipe_id), None)
+        if not index:
             abort(404, message="Recipe not found")
-        del recipes[recipe_id]
+        del recipes[index]
         save_db({"recipes": recipes})
-        # return {"message": f"Recipe deleted: {recipe_id}"}
-        return {"message": "Recipe deleted"}
+        return {"message": f"Recipe deleted: {recipe_id}"}
+        # return {"message": "Recipe deleted"}
 
 
 @blueprint.route("/recipe")
