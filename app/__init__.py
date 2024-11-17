@@ -16,8 +16,8 @@ api = Api(app)
 @app.route('/swagger')
 def get_swagger():
     swag = swagger(app)
-    swag['info']['version'] = "1.0"
-    swag['info']['title'] = "My API"
+    # swag['info']['version'] = "1.0"
+    # swag['info']['title'] = "Recipe Rest API"
     return jsonify(swag)
 
 
@@ -28,7 +28,7 @@ swagger_ui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
     config={
-        'app_name': "My API"
+        'app_name': "Recipe REST API - Swagger"
     }
 )
 api.register_blueprint(blp)
