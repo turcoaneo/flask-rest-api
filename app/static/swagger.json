@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Recipes Rest API marshmallow",
-    "description": "Swagger UI for recipes",
+    "description": "Swagger UI for Recipes API",
     "version": "1.0.0"
   },
   "paths": {
