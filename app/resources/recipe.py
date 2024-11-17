@@ -28,14 +28,17 @@ class Recipe(MethodView):
 
     @blueprint.arguments(RecipeUpdateSchema)
     @blueprint.response(200, RecipeSchema)
-    def put(self, recipe_data, recipe_id): #TODO check again
+    def put(self, recipe_data, recipe_id):
         recipes = open_db()["recipes"]
-        index = next((i for i, item in enumerate(recipes) if item["id"] == recipe_id), None)
-        if not index:
+        existing_recipe = next((item for item in recipes if item["id"] == recipe_id), None)
+        if not existing_recipe:
             abort(404, message="Recipe not found")
-        recipes[index] = recipe_data
+        for attr in RecipeUpdateSchema.get_attr_list():
+            if attr in recipe_data:
+                existing_recipe[attr] = recipe_data[attr]
+
         save_db({"recipes": recipes})
-        return recipe_data
+        return existing_recipe
 
     @blueprint.response(200, description="Recipe deleted")
     def delete(self, recipe_id):

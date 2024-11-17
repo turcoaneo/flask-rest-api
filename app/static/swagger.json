@@ -70,7 +70,7 @@
             }
           },
           "422": {
-            "description": "Invalid request data",
+            "description": "Invalid request data, check the request body!",
             "content": {
               "application/json": {
                 "schema": {
@@ -89,7 +89,7 @@
     },
     "/recipe/{id}": {
       "delete": {
-        "summary": "Get a specific recipe",
+        "summary": "Delete a specific recipe",
         "parameters": [
           {
             "name": "id",
@@ -103,21 +103,6 @@
         "responses": {
           "200": {
             "description": "Successful delete operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found to delete by this id",
             "content": {
               "application/json": {
                 "schema": {
@@ -155,26 +140,11 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "Not found by this id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       },
       "put": {
-        "summary": "Update a recipe",
+        "summary": "Update / patch a recipe",
         "parameters": [
           {
             "name": "id",
@@ -196,26 +166,11 @@
         },
         "responses": {
           "201": {
-            "description": "Updated successfully",
+            "description": "Updated or patched successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/definitions/Recipe"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found to update by this id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
                 }
               }
             }
@@ -248,25 +203,25 @@
         },
         "allOf": {
           "$ref": "#/definitions/RecipeUpdate"
+        }
       }
-    }
-  },
-  "RecipeUpdate": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string"
-      },
-      "ingredients": {
-        "type": "array",
-        "items": {
+    },
+    "RecipeUpdate": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instructions": {
           "type": "string"
         }
-      },
-      "instructions": {
-        "type": "string"
       }
     }
   }
-}
 }
