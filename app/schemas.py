@@ -9,6 +9,10 @@ class RecipeSchema(Schema):
 
 
 class RecipeUpdateSchema(Schema):
-    name = fields.Str()
-    ingredients = fields.List(fields.Str())
-    instructions = fields.String()
+    name = fields.Str(required=False)
+    ingredients = fields.List(fields.Str(), required=False)
+    instructions = fields.String(required=False)
+
+    @staticmethod
+    def get_attr_list():
+        return ["name", "ingredients", "instructions"]
