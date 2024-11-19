@@ -21,8 +21,6 @@ def index():
 @app.route('/swagger')
 def get_swagger():
     swag = swagger(app)
-    # swag['info']['version'] = "1.0"
-    # swag['info']['title'] = "Recipe Rest API"
     return jsonify(swag)
 
 
