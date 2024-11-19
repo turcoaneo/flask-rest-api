@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Recipes</title>
-    <link rel="icon"  type="image/png" href="../static/favicon.png">
+    <link rel="icon" type="image/png" href="../static/favicon.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/site.css">
@@ -12,6 +12,30 @@
 
     <div class="row my-4">
         <h1 id="app-title" data-test-id="heading-title">Recipe form</h1>
+    </div>
+
+    <div class="row my-3">
+        <form method="POST" name="create-form" id="create-form" class="input-group">
+            <label for="name" class="col-form-label text-dark input-group-text">Name</label>
+            <input id="name" name="name" data-test-id="name"
+                   class="form-control"/>
+            <label for="ingredients" class="col-form-label text-dark input-group-text">Ingredients</label>
+            <input id="ingredients" name="ingredients" data-test-id="ingredients"
+                   class="form-control"/>
+            <label for="instructions" class="col-form-label text-dark input-group-text">Instructions</label>
+            <input id="instructions" name="instructions" data-test-id="instructions"
+                   class="form-control"/>
+            <div class="input-group-append">
+                <button
+                        class="btn btn-outline-primary"
+                        type="button"
+                        id="create-button"
+                        data-test-id="submit-button"
+                >
+                    Create
+                </button>
+            </div>
+        </form>
     </div>
 
     <div class="row my-3">
