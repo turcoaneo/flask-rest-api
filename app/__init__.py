@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_smorest import Api
 from flask_swagger import swagger
 from flask_swagger_ui import get_swaggerui_blueprint
@@ -11,6 +11,11 @@ app.config["API_VERSION"] = "v1"
 app.config["OPENAPI_VERSION"] = "3.0.3"
 app.config["OPENAPI_URL_PREFIX"] = "/"
 api = Api(app)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 @app.route('/swagger')

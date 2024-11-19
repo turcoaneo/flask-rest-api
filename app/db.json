@@ -1,1 +1,40 @@
-{"recipes": [{"id": "1", "name": "alpha", "ingredients": ["nut", "cherry"], "instructions": "Press"}, {"name": "c", "ingredients": ["milk", "banana"], "instructions": "Instructions", "id": "6e9f170f4c3f43e3860c38ec859ef06b"}, {"name": "d", "ingredients": ["raisins", "beans"], "instructions": "Mix", "id": "843ab84ad0514197b8312b25df65d9aa"}, {"name": "extra", "ingredients": ["rose", "cream"], "instructions": "Remix", "id": "a80d9368164047c892e715e0d7219df1"}]}
+{
+  "recipes": [
+    {
+      "id": "1",
+      "name": "alpha",
+      "ingredients": [
+        "nut",
+        "cherry"
+      ],
+      "instructions": "Press"
+    },
+    {
+      "name": "c",
+      "ingredients": [
+        "milk",
+        "banana"
+      ],
+      "instructions": "Instructions",
+      "id": "6e9f170f4c3f43e3860c38ec859ef06b"
+    },
+    {
+      "name": "d",
+      "ingredients": [
+        "raisins",
+        "beans"
+      ],
+      "instructions": "Mix",
+      "id": "843ab84ad0514197b8312b25df65d9aa"
+    },
+    {
+      "name": "extra",
+      "ingredients": [
+        "rose",
+        "cream"
+      ],
+      "instructions": "Remix",
+      "id": "a80d9368164047c892e715e0d7219df1"
+    }
+  ]
+}
