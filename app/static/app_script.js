@@ -14,8 +14,14 @@ const fetchResult = (id) => {
         if (response.ok) {
             let result = await response.json();
             return buildAppTable(result);
+        } else {
+            let result = {};
+            result["id"] = id;
+            result["name"] = response.status;
+            result["ingredients"] = response.statusText;
+            result["instructions"] = response.url;
+            return buildAppTable(result);
         }
-        return Promise.reject(response);
     }).catch((error) => {
         console.error('Something went wrong.', error);
     });
