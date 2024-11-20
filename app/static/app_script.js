@@ -81,6 +81,54 @@ const init = async () => {
     })
 }
 
+const create = async () => {
+    const submitButton = document.getElementById('create-button');
+
+    submitButton.addEventListener('click', async (evt) => {
+        evt.preventDefault();
+        let form = document.forms["create-form"];
+
+        let fd = new FormData(form);
+
+        let data = {};
+
+        for (let [key, prop] of fd) {
+            data[key] = prop;
+            if (key === "ingredients") {
+                data[key] = prop.split(',');
+            }
+        }
+
+        data = JSON.stringify(data, null, 2);
+
+        console.log(data);
+        await createRecipe(data);
+    })
+}
+
+const createRecipe = (userInput) => {
+    console.log(userInput);
+    let endpoint = "http://127.0.0.1:5000/recipe";
+    fetch(endpoint, {
+        method: 'POST',
+        headers: new Headers({
+            'content-type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:5000/'
+        }),
+        cache: 'no-cache',
+        body: userInput,
+    }).then(async (response) => {
+        if (response.ok) {
+            fetchResult("");
+        } else {
+            console.error('Something went wrong when creating new recipe.', response);
+        }
+    }).catch((error) => {
+        console.error('Something went wrong when creating new recipe.', error);
+    });
+}
+
 window.onload = () => {
     init().then(() => console.log("Successful init!"));
+    create().then(() => console.log("Successful creation event listener!"));
 }
