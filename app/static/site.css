@@ -1,3 +1,59 @@
 #app {
     max-width: 800px;
+    font-family: monospace;
+    letter-spacing: -0.5px;
+}
+
+h1 {
+    color: darkslategray;
+    text-align: center;
+    letter-spacing: -2px;
+    background-color: deepskyblue;
+    font-family: "Comic Sans MS", serif;
+}
+
+#div-create-form {
+    display: none;
+}
+
+#app-table-result td {
+    color: darkslategray;
+    padding-left: 5px;
+}
+
+#app-table-result tr:first-child {
+    background-color: darkslategray;
+    color: deepskyblue;
+    font-family: Monospaced, monospace;
+    padding-left: 0;
+}
+
+#div-plus {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#tooltip-update {
+    background-color: cadetblue;
+    color: darkslateblue;
+}
+
+#tooltip-remove {
+    background-color: darkred;
+    color: darkgray;
+}
+
+#tooltip-remove, #tooltip-update {
+    display: none;
+    text-align: center;
+    border-radius: 4px;
+    padding: 2px;
+    z-index: 1;
+    position: absolute;
+    font-size: 0.6em;
+    width: 150px;
+}
+
+#update-button {
+    display: none;
 }
