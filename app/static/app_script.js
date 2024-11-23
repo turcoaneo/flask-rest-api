@@ -1,11 +1,11 @@
-const MISSING_ID = -1;
-let idSearch = MISSING_ID;
-const WEB_URL = "http://127.0.0.1:5000/";
+import {WEB_URL, MISSING_ID} from "./utils.js";
+
+let searchId = MISSING_ID;
 const fetchResult = (id) => {
     let endpoint = WEB_URL + "recipe";
     if (id !== "") {
         endpoint = `http://127.0.0.1:5000/recipe/${id}`;
-        idSearch = id;
+        searchId = id;
         document.getElementById("input-text").value = "";
     }
     fetch(endpoint, {
@@ -172,7 +172,7 @@ function clearSearchForm() {
 
 const updateRecipe = (userInput) => {
     // console.log(userInput);
-    let endpoint = `http://127.0.0.1:5000/recipe/${idSearch}`;
+    let endpoint = `http://127.0.0.1:5000/recipe/${searchId}`;
     fetch(endpoint, {
         method: 'PUT', headers: new Headers({
             'content-type': 'application/json', 'Access-Control-Allow-Origin': WEB_URL
@@ -190,7 +190,7 @@ const updateRecipe = (userInput) => {
 
     resetComponents();
     clearSearchForm();
-    idSearch = MISSING_ID;
+    searchId = MISSING_ID;
 }
 
 function addOrClearDiv(addButton) {
@@ -225,7 +225,7 @@ const rows = async () => {
         (function (e) {
             trs[e].addEventListener("mouseover", function () {
                 let selectors;
-                if (idSearch !== MISSING_ID) {
+                if (searchId !== MISSING_ID) {
                     selectors = '#tooltip-update';
                 } else {
                     selectors = '#tooltip-remove';
@@ -260,7 +260,7 @@ function setFormComponents(dict) {
 }
 
 const change = async (id) => {
-    if (idSearch !== MISSING_ID) {
+    if (searchId !== MISSING_ID) {
         setFormComponents({
             "div-create-form": "block",
             "create-button": "none",
