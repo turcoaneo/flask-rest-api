@@ -5,7 +5,7 @@ export const userInputElement = document.getElementById("input-text");
 export const submitButton = document.getElementById("create-button");
 
 export const cleanTable = () => {
-    let rows = document.querySelectorAll('.app-row');
+    let rows = document.querySelectorAll(".app-row");
     rows.forEach(row => {
         row.remove();
     })
@@ -51,7 +51,7 @@ function prepareFormData(formData) {
         }
     }
 
-    console.log(data);
+    // console.log(data);
     return JSON.stringify(data);
 }
 
@@ -62,33 +62,27 @@ const getFormData = (form) => {
 
 const processResult = (result, table) => {
     let row = document.createElement('tr');
-    row.classList.add('app-row');
+    row.classList.add("app-ro");
     const resultId = result["id"];
     row.setAttribute("id", "tr-" + resultId);
-    let colId = document.createElement('td');
 
-    colId.innerText = resultId;
-    let colName = document.createElement('td');
-    colName.setAttribute("id", "td-name");
-    colName.innerText = result["name"];
-    let colIngredients = document.createElement('td');
-    colIngredients.setAttribute("id", "td-ingredients");
-    // noinspection JSValidateTypes
-    colIngredients.innerText = result["ingredients"];
-    let colInstructions = document.createElement('td');
-    // noinspection JSValidateTypes
-    colInstructions.innerText = result["instructions"];
-    colInstructions.setAttribute("id", "td-instructions");
+    setCol("id")
+    setCol("name");
+    setCol("ingredients");
+    setCol("instructions");
+
     let colActions = document.createElement('td');
     colActions.append(ul_buttons(resultId));
-
-    row.appendChild(colId);
-    row.appendChild(colName);
-    row.appendChild(colIngredients);
-    row.appendChild(colInstructions);
     row.appendChild(colActions);
 
     table.appendChild(row);
+
+    function setCol(col) {
+        let td = document.createElement('td');
+        td.setAttribute("id", "td-" + col);
+        td.innerText = result[col];
+        row.appendChild(td);
+    }
 }
 
 const ul_buttons = (id) => {
