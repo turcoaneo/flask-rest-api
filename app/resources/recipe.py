@@ -63,7 +63,7 @@ class RecipeList(MethodView):
     @blueprint.arguments(RecipeSchema)
     @blueprint.response(201, RecipeSchema)
     def post(self, recipe_data):
-        recipe_id = uuid4().hex
+        recipe_id = uuid4().hex[:4]
         new_recipe = {**recipe_data, "id": recipe_id}
         db = open_db()
         data = list(db["recipes"])

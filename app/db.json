@@ -1,1 +1,39 @@
-{"recipes": [{"id": "1", "name": "Siralop", "ingredients": ["water", "lime"], "instructions": "Mix"}, {"name": "Cocktails", "ingredients": ["gin", " soda"], "instructions": "Fizz", "id": "79eead321bc943829b52858d0f8f9a28"}, {"name": "saga", "ingredients": ["coke", " steel"], "instructions": "Boil", "id": "fadde009f2fe41e28da8867c2cc69298"}, {"name": "Cucu", "ingredients": ["water", " syrup"], "instructions": "Stir", "id": "8e3522494a0845bc9189a0c757738953"}]}
+{
+  "recipes": [
+    {
+      "id": "1",
+      "name": "Siralop",
+      "ingredients": [
+        "Study, work"
+      ],
+      "instructions": "Enjoy"
+    },
+    {
+      "name": "Cocktail",
+      "ingredients": [
+        "water",
+        " lime"
+      ],
+      "instructions": "Stir",
+      "id": "0676"
+    },
+    {
+      "name": "Fizz",
+      "ingredients": [
+        "gin",
+        " soda"
+      ],
+      "instructions": "Stir",
+      "id": "1cbf"
+    },
+    {
+      "name": "saga",
+      "ingredients": [
+        "accounting",
+        " finance"
+      ],
+      "instructions": "Automatize",
+      "id": "b99a"
+    }
+  ]
+}
