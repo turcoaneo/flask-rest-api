@@ -18,12 +18,21 @@ h1 {
 
 #app-table-result td {
     color: darkslategray;
-    padding-left: 3px;
+    padding-left: 6px;
+    padding-right: 3px;
 }
 
-#app-table-result td :last-child  {
+#app-table-result td:nth-child(2n+1) {
+    background-color: lightgray;
+}
+
+#app-table-result td:last-child {
     margin-left: auto;
     margin-right: auto;
+}
+
+#app-table-result tr{
+    height: 15px;
 }
 
 #app-table-result tr:first-child {
@@ -42,10 +51,6 @@ h1 {
     display: none;
 }
 
-#div-update-form {
-    display: none;
-}
-
 #th-actions {
-    width: 130px;
+    width: 140px;
 }

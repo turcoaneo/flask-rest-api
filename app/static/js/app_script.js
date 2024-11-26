@@ -19,7 +19,7 @@ const createDeleteItemEventListener = async () => {
     deleteButtonList.forEach(deleteButton => {
         deleteButton.addEventListener('click', async () => {
             searchId = getRecipeIdFromElementId(deleteButton);
-            console.log("Update button: " + searchId);
+            // console.log("Update button: " + searchId);
             await deleteRecipe();
         })
     })
