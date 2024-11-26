@@ -14,12 +14,12 @@ h1 {
 
 #div-create-form {
     display: none;
+    /*visibility: hidden;*/
 }
 
 #app-table-result td {
     color: darkslategray;
-    padding-left: 6px;
-    padding-right: 3px;
+    padding: 1px 3px 1px 6px;
 }
 
 #app-table-result td:nth-child(2n+1) {
@@ -29,10 +29,6 @@ h1 {
 #app-table-result td:last-child {
     margin-left: auto;
     margin-right: auto;
-}
-
-#app-table-result tr{
-    height: 15px;
 }
 
 #app-table-result tr:first-child {
@@ -49,8 +45,4 @@ h1 {
 
 .recipe-add-edit {
     display: none;
-}
-
-#th-actions {
-    width: 140px;
 }
