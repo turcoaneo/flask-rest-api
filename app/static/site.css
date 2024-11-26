@@ -54,6 +54,10 @@ h1 {
     width: 150px;
 }
 
-#update-button {
+.recipe-add-edit {
+    display: none;
+}
+
+#div-update-form {
     display: none;
 }
