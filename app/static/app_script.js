@@ -1,33 +1,9 @@
 import {WEB_URL, MISSING_ID} from "./utils.js";
+import {apiCall} from "./rest_api.js";
 
 let searchId = MISSING_ID;
-const fetchResult = (id) => {
-    let endpoint = WEB_URL + "recipe";
-    if (id !== "") {
-        endpoint = `http://127.0.0.1:5000/recipe/${id}`;
-        searchId = id;
-        document.getElementById("input-text").value = "";
-    }
-    fetch(endpoint, {
-        method: 'GET', headers: new Headers({
-            'content-type': 'application/json', 'Access-Control-Allow-Origin': WEB_URL
-        }), cache: 'no-cache',
-    }).then(async (response) => {
-        if (response.ok) {
-            let result = await response.json();
-            return buildAppTable(result);
-        } else {
-            let result = {};
-            result["id"] = id;
-            result["name"] = response.status;
-            result["ingredients"] = response.statusText;
-            result["instructions"] = response.url;
-            return buildAppTable(result);
-        }
-    }).catch((error) => {
-        console.error('Something went wrong.', error);
-    });
-}
+
+const userInputElement = document.getElementById("input-text");
 
 function processResult(result, table) {
     let row = document.createElement('tr');
@@ -38,8 +14,10 @@ function processResult(result, table) {
     let colName = document.createElement('td');
     colName.innerText = result["name"];
     let colIngredients = document.createElement('td');
+    // noinspection JSValidateTypes
     colIngredients.innerText = result["ingredients"];
     let colInstructions = document.createElement('td');
+    // noinspection JSValidateTypes
     colInstructions.innerText = result["instructions"];
 
     row.appendChild(colId);
@@ -71,16 +49,26 @@ const cleanTable = () => {
 }
 
 const updateResults = async (userInput) => {
-    cleanTable();
-    await fetchResult(userInput.value);
+    userInputElement.innerText = "";
+
+    let id = userInput.value;
+    const promise = apiCall(id, WEB_URL, "GET", null);
+    promise
+        .then((result) => {
+            cleanTable();
+            searchId = id !== "" ? id : MISSING_ID;
+            return buildAppTable(result);
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+        });
 }
 
-const init = async () => {
+const searchResult = async () => {
     const submitButton = document.getElementById('find-button');
-    const userInput = document.getElementById('input-text');
 
     submitButton.addEventListener('click', async () => {
-        await updateResults(userInput);
+        await updateResults(userInputElement);
     })
 }
 
@@ -124,22 +112,14 @@ const create = async () => {
 }
 
 const createRecipe = (userInput) => {
-    // console.log(userInput);
-    let endpoint = WEB_URL + "recipe";
-    fetch(endpoint, {
-        method: 'POST', headers: new Headers({
-            'content-type': 'application/json', 'Access-Control-Allow-Origin': WEB_URL
-        }), cache: 'no-cache', body: userInput,
-    }).then(async (response) => {
-        if (response.ok) {
-            cleanTable();
-            await fetchResult("");
-        } else {
-            console.error('Something went wrong when creating new recipe.', response);
-        }
-    }).catch((error) => {
-        console.error('Something went wrong when creating new recipe.', error);
-    });
+    const promise = apiCall(null, WEB_URL, "POST", userInput);
+    promise
+        .then((result) => {
+            updateResults("").then(() => console.log(result));
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+        });
 }
 
 const update = async () => {
@@ -172,25 +152,14 @@ function clearSearchForm() {
 
 const updateRecipe = (userInput) => {
     // console.log(userInput);
-    let endpoint = `http://127.0.0.1:5000/recipe/${searchId}`;
-    fetch(endpoint, {
-        method: 'PUT', headers: new Headers({
-            'content-type': 'application/json', 'Access-Control-Allow-Origin': WEB_URL
-        }), cache: 'no-cache', body: userInput,
-    }).then(async (response) => {
-        if (response.ok) {
-            cleanTable();
-            await fetchResult("");
-        } else {
-            console.error('Something went wrong when updating new recipe.', response);
-        }
-    }).catch((error) => {
-        console.error('Something went wrong when creating new recipe.', error);
-    });
-
-    resetComponents();
-    clearSearchForm();
-    searchId = MISSING_ID;
+    const promise = apiCall(searchId, WEB_URL, "PUT", userInput);
+    promise
+        .then((result) => {
+            updateResults("").then(() => console.log(result));
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+        });
 }
 
 function addOrClearDiv(addButton) {
@@ -274,17 +243,27 @@ const change = async (id) => {
 }
 
 const deleteRecipe = (id) => {
-    fetch(`http://127.0.0.1:5000/recipe/${id}`, {
-        method: 'DELETE', headers: new Headers({
-            'content-type': 'application/json', 'Access-Control-Allow-Origin': WEB_URL
-        }), cache: 'no-cache',
-    }).then(async (response) => {
-        cleanTable();
-        await fetchResult("");
-        console.log(response);
-    }).catch((error) => {
-        console.error('Something went wrong.', error);
-    });
+    // fetch(`http://127.0.0.1:5000/recipe/${id}`, {
+    //     method: 'DELETE', headers: new Headers({
+    //         'content-type': 'application/json', 'Access-Control-Allow-Origin': WEB_URL
+    //     }), cache: 'no-cache',
+    // }).then(async (response) => {
+    //     cleanTable();
+    //     await fetchResult("");
+    //     console.log(response);
+    // }).catch((error) => {
+    //     console.error('Something went wrong.', error);
+    // });
+    const promise = apiCall(id, WEB_URL, "DELETE", null);
+    promise
+        .then((result) => {
+            cleanTable();
+            searchId = id !== "" ? id : MISSING_ID;
+            return buildAppTable(result);
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+        });
 }
 
 const enableButton = async (elementId) => {
@@ -320,7 +299,7 @@ const enableButton = async (elementId) => {
 
 
 window.onload = () => {
-    init().then(() => console.log("Successful init!"));
+    searchResult().then(() => console.log("Successful init!"));
     create().then(() => console.log("Successful creation event listener!"));
     update().then(() => console.log("Successful update event listener!"));
     insert().then(() => console.log("Successful plus button event listener!"));
