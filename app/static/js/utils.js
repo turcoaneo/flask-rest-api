@@ -62,7 +62,7 @@ const getFormData = (form) => {
 
 const processResult = (result, table) => {
     let row = document.createElement('tr');
-    row.classList.add("app-ro");
+    row.classList.add("app-row");
     const resultId = result["id"];
     row.setAttribute("id", "tr-" + resultId);
 
