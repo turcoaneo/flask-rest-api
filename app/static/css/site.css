@@ -18,7 +18,12 @@ h1 {
 
 #app-table-result td {
     color: darkslategray;
-    padding-left: 5px;
+    padding-left: 3px;
+}
+
+#app-table-result td :last-child  {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #app-table-result tr:first-child {
@@ -33,31 +38,14 @@ h1 {
     margin-right: auto;
 }
 
-#tooltip-update {
-    background-color: cadetblue;
-    color: darkslateblue;
-}
-
-#tooltip-remove {
-    background-color: darkred;
-    color: darkgray;
-}
-
-#tooltip-remove, #tooltip-update {
-    display: none;
-    text-align: center;
-    border-radius: 4px;
-    padding: 2px;
-    z-index: 1;
-    position: absolute;
-    font-size: 0.6em;
-    width: 150px;
-}
-
 .recipe-add-edit {
     display: none;
 }
 
 #div-update-form {
     display: none;
+}
+
+#th-actions {
+    width: 130px;
 }
