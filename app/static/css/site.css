@@ -14,11 +14,21 @@ h1 {
 
 #div-create-form {
     display: none;
+    /*visibility: hidden;*/
 }
 
 #app-table-result td {
     color: darkslategray;
-    padding-left: 5px;
+    padding: 1px 3px 1px 6px;
+}
+
+#app-table-result td:nth-child(2n+1) {
+    background-color: lightgray;
+}
+
+#app-table-result td:last-child {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #app-table-result tr:first-child {
@@ -33,31 +43,6 @@ h1 {
     margin-right: auto;
 }
 
-#tooltip-update {
-    background-color: cadetblue;
-    color: darkslateblue;
-}
-
-#tooltip-remove {
-    background-color: darkred;
-    color: darkgray;
-}
-
-#tooltip-remove, #tooltip-update {
-    display: none;
-    text-align: center;
-    border-radius: 4px;
-    padding: 2px;
-    z-index: 1;
-    position: absolute;
-    font-size: 0.6em;
-    width: 150px;
-}
-
 .recipe-add-edit {
-    display: none;
-}
-
-#div-update-form {
     display: none;
 }
