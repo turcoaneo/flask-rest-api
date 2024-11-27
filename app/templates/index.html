@@ -56,8 +56,18 @@
     </div>
 
     <div class="row my-1 col-lg-13">
-        <div class="col-sm-9 col-md-10 col-lg-11 table-responsive">
-            <table id="app-table-result" data-test-id="test-table-result" class="table table-bordered">
+        <div class="col-sm-1 col-md-1 col-lg-1" id="div-plus">
+            <button
+                    class="btn btn-outline-primary"
+                    type="button"
+                    id="toggle-show-create-form-button"
+                    data-test-id="toggle-show-create-form-button"
+            >
+                +
+            </button>
+        </div>
+        <div class="col-sm-11 col-md-11 col-lg-11 table-responsive-sm">
+            <table id="app-table-result" data-test-id="test-table-result" class="table table-bordered table-sm">
                 <thead>
                 <tr>
                     <th>
@@ -72,23 +82,12 @@
                     <th>
                         Instructions
                     </th>
-                    <th >
+                    <th class="th-actions">
                         Actions
                     </th>
                 </tr>
                 </thead>
             </table>
-        </div>
-
-        <div class="col-sm-3 col-md-2 col-lg-1" id="div-plus">
-            <button
-                    class="btn btn-outline-primary"
-                    type="button"
-                    id="toggle-show-create-form-button"
-                    data-test-id="toggle-show-create-form-button"
-            >
-                +
-            </button>
         </div>
     </div>
 </div>

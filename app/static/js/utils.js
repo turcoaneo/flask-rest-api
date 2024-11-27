@@ -88,7 +88,7 @@ const processResult = (result, table) => {
 const ul_buttons = (id) => {
     let btnList = document.createElement("ul");
     btnList.classList.add("list-inline");
-    btnList.classList.add("m-3");
+    btnList.classList.add("m-1");
     btnList.setAttribute("id", "ul-buttons-" + id);
 
     createLi(createBtn(id, "Add", "../static/icons/table.svg"));
@@ -110,11 +110,11 @@ const ul_buttons = (id) => {
         btn.setAttribute("title", btnTitle);
         btn.setAttribute("id", btnTitle + "-" + id);
         btn.setAttribute("type", "button");
-        // btn.setAttribute("data-toggle", "tooltip");
-        // btn.setAttribute("data-placement", "top");
 
         btn.classList.add("btn");
         btn.classList.add("btn-sm");
+        btn.classList.add("btn-outline-primary");
+        btn.classList.add("py-0");
         btn.classList.add("rounded-2");
         addBtnCustomAttributes();
 
