@@ -1,7 +1,7 @@
 export const setCell = (cell, cellId) => {
     const content = cell.innerText;
 
-    // console.log("Td: " + content);
+    // console.log("Td: ", content);
     const textField = document.createElement("textarea");
     textField.setAttribute("id", "textarea-" + cellId);
     textField.style.width = cell.clientWidth - 2 + 'px';

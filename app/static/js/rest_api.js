@@ -1,5 +1,5 @@
-export const apiCall = async (id, WEB_URL, methodType, requestBody) => {
-    let endpoint = WEB_URL + "recipe";
+export const apiCall = async (id, WEB_URL, recipeEndpoint, methodType, requestBody) => {
+    let endpoint = WEB_URL + "" + recipeEndpoint;
     if (!!id) {
         endpoint = `http://127.0.0.1:5000/recipe/${id}`;
     }

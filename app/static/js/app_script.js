@@ -1,25 +1,19 @@
 import {
-    buildAppTable,
-    cleanTable,
-    clearFormData,
-    getCreateFormData,
-    getRecipeIdFromElementId, getUpdateFormData,
-    MISSING_ID,
-    submitButton,
-    userInputElement,
-    WEB_URL,
+    buildAppTable, cleanTable, clearFormData, getCreateFormData, getRecipeIdFromElementId, getUpdateFormData,
+    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, recipeEndpoint, submitButton, userInputElement,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
 import {getUserInput, setCell, toggleButtons} from "./utils_update.js";
 
 let searchId = MISSING_ID;
+let startTime = new Date().getTime();
 
 const createDeleteItemEventListener = async () => {
     const deleteButtonList = document.querySelectorAll('.recipe-delete');
     deleteButtonList.forEach(deleteButton => {
         deleteButton.addEventListener('click', async () => {
             searchId = getRecipeIdFromElementId(deleteButton);
-            // console.log("Update button: " + searchId);
+            // console.log("Update button: ", searchId);
             await deleteRecipe();
         })
     })
@@ -33,6 +27,20 @@ const createUpdateItemEventListener = async () => {
     }
 
     updateButtonListener(updateButtonList, setNewText);
+}
+
+const checkServerItemEventListener = async () => {
+    const checkingDiv = document.getElementById("div-two-actions");
+    checkingDiv.addEventListener('mouseover', async () => {
+        let stopTime = new Date().getTime();
+        let elapsedTime = (stopTime - startTime) / 1000;
+        // console.log(elapsedTime);
+        if (elapsedTime > IDLE_TIME_SEC) {
+            startTime = stopTime;
+            console.log("Checking server as having been idle for: ", elapsedTime);
+            setTimeout(await getHelloWorld, APP_TIMEOUT_MILLI);
+        }
+    })
 }
 
 const createSearchItemEventListener = async () => {
@@ -82,7 +90,7 @@ const enableCreateButtonEventListeners = async () => {
 
 const getItem = async (userInput) => {
     let id = userInput.value;
-    const promise = apiCall(id, WEB_URL, "GET", null);
+    const promise = apiCall(id, WEB_URL, recipeEndpoint, "GET", null);
     promise
         .then((result) => {
             cleanTable();
@@ -96,8 +104,21 @@ const getItem = async (userInput) => {
         });
 }
 
+const getHelloWorld = async () => {
+    const promise = apiCall(null, WEB_URL, "hello", "GET", null);
+    promise
+        .then((result) => {
+            console.log(result);
+            document.getElementById("app-title").innerText = "Recipe form";
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+            document.getElementById("app-title").innerText = "Server not running";
+        });
+}
+
 const createRecipe = (userInput) => {
-    const promise = apiCall(null, WEB_URL, "POST", userInput);
+    const promise = apiCall(null, WEB_URL, recipeEndpoint, "POST", userInput);
     promise
         .then((result) => {
             getItem("").then(() => console.log(result));
@@ -109,7 +130,7 @@ const createRecipe = (userInput) => {
 
 const updateRecipe = (userInput) => {
     // console.log(userInput);
-    const promise = apiCall(searchId, WEB_URL, "PUT", userInput);
+    const promise = apiCall(searchId, WEB_URL, recipeEndpoint, "PUT", userInput);
     promise
         .then((result) => {
             getItem("").then(() => console.log(result));
@@ -120,7 +141,7 @@ const updateRecipe = (userInput) => {
 }
 
 const deleteRecipe = () => {
-    const promise = apiCall(searchId, WEB_URL, "DELETE", null);
+    const promise = apiCall(searchId, WEB_URL, recipeEndpoint, "DELETE", null);
     promise
         .then(() => {
             getItem("").then(() => console.log("Re-fetching after delete"));
@@ -146,7 +167,7 @@ function updateButtonListener(updateButtonList, setNewText) {
         updateButton.addEventListener('click', async (evt) => {
             evt.preventDefault();
             searchId = getRecipeIdFromElementId(updateButton);
-            // console.log("Update button: " + searchId);
+            // console.log("Update button: ", searchId);
             const resultTable = document.getElementById("app-table-result");
             for (let i = 1; i < resultTable.rows.length; i++) {
                 let row = resultTable.rows[i];
@@ -173,6 +194,7 @@ function updateButtonListener(updateButtonList, setNewText) {
 
 
 window.onload = () => {
+    checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
     createSearchItemEventListener().then(() => console.log("Search item event listener created!"));
     createAddItemEventListener().then(() => console.log("Add item event listener created!"));
     createBtnEnableFormEventListener().then(() => console.log("Plus-minus button item event listener created!"));
