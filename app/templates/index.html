@@ -14,10 +14,20 @@
         <h1 id="app-title" data-test-id="heading-title">Recipe form</h1>
     </div>
 
-    <div class="row my-3">
-        <div class="input-group">
+    <div class="my-3 col-sm-12 col-md-12 col-lg-12" id="div-two-actions">
+        <div class="col-sm-1 col-md-1 col-lg-1" id="div-plus">
+            <button
+                    class="btn btn-outline-primary"
+                    type="button"
+                    id="toggle-show-create-form-button"
+                    data-test-id="toggle-show-create-form-button"
+            >
+                +
+            </button>
+        </div>
+        <div class="input-group col-sm-11 col-md-11 col-lg-11" id="div-search">
             <label for="input-text" class="col-form-label text-dark input-group-text">Enter id</label>
-            <input id="input-text" data-test-id="input-text" class="form-control" placeholder="Leave empty to get all"/>
+            <input id="input-text" data-test-id="input-text" class="form-control" placeholder="Id or empty for all"/>
             <div class="input-group-append">
                 <button
                         class="btn btn-outline-primary"
@@ -31,17 +41,14 @@
         </div>
     </div>
 
-    <div class="row my-2" id="div-create-form">
+    <div class="my-1" id="div-create-form">
         <form method="POST" name="create-form" id="create-form" class="input-group">
             <label for="name" class="col-form-label text-dark input-group-text">Name</label>
-            <input id="name" name="name" data-test-id="name"
-                   class="form-control"/>
+            <input id="name" name="name" data-test-id="name" class="form-control" placeholder="Name"/>
             <label for="ingredients" class="col-form-label text-dark input-group-text">Ingredients</label>
-            <input id="ingredients" name="ingredients" data-test-id="ingredients"
-                   class="form-control"/>
+            <input id="ingredients" name="ingredients" data-test-id="ingredients" class="form-control" placeholder="Ingredients"/>
             <label for="instructions" class="col-form-label text-dark input-group-text">Instructions</label>
-            <input id="instructions" name="instructions" data-test-id="instructions"
-                   class="form-control"/>
+            <input id="instructions" name="instructions" data-test-id="instructions" class="form-control" placeholder="Instructions"/>
             <div class="input-group-append">
                 <button disabled
                         class="btn btn-outline-primary"
@@ -55,41 +62,28 @@
         </form>
     </div>
 
-    <div class="row my-1 col-lg-13">
-        <div class="col-sm-9 col-md-10 col-lg-11 table-responsive">
-            <table id="app-table-result" data-test-id="test-table-result" class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Ingredients
-                    </th>
-                    <th>
-                        Instructions
-                    </th>
-                    <th >
-                        Actions
-                    </th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-
-        <div class="col-sm-3 col-md-2 col-lg-1" id="div-plus">
-            <button
-                    class="btn btn-outline-primary"
-                    type="button"
-                    id="toggle-show-create-form-button"
-                    data-test-id="toggle-show-create-form-button"
-            >
-                +
-            </button>
-        </div>
+    <div class="my-1 col-sm-12 col-md-12 col-lg-12 table-responsive-sm">
+        <table id="app-table-result" data-test-id="test-table-result" class="table table-bordered table-sm">
+            <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Ingredients
+                </th>
+                <th>
+                    Instructions
+                </th>
+                <th class="th-actions">
+                    Actions
+                </th>
+            </tr>
+            </thead>
+        </table>
     </div>
 </div>
 
