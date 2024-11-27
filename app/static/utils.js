@@ -11,28 +11,21 @@ export const cleanTable = () => {
     })
 }
 
-export function clearFormData() {
+export const getRecipeIdFromElementId = (element) => {
+    return element.getAttribute("id").split("-")[1];
+}
+
+export const clearFormData = () => {
     document.getElementById("create-form").reset();
 }
 
-export function getFormData() {
+export const getUpdateFormData = (form) => {
+    return prepareFormData(form);
+}
+
+export const getCreateFormData = () => {
     let form = document.forms["create-form"];
-    let formData = new FormData(form);
-    let data = {};
-
-    for (let [key, prop] of formData) {
-        data[key] = prop;
-        if (prop === "") {
-            delete data[key];
-        }
-        if (key === "ingredients") {
-            data[key] = prop.split(',');
-        }
-    }
-
-    data = JSON.stringify(data);
-    // console.log(data);
-    return data;
+    return getFormData(form);
 }
 
 export const buildAppTable = (results) => {
@@ -46,22 +39,48 @@ export const buildAppTable = (results) => {
     }
 }
 
+function prepareFormData(formData) {
+    let data = {};
+    for (let [key, prop] of formData) {
+        data[key] = prop;
+        if (prop === "") {
+            delete data[key];
+        }
+        if (key === "ingredients") {
+            data[key] = prop.split(',');
+        }
+    }
+
+    console.log(data);
+    return JSON.stringify(data);
+}
+
+const getFormData = (form) => {
+    let formData = new FormData(form);
+    return prepareFormData(formData);
+}
+
 const processResult = (result, table) => {
     let row = document.createElement('tr');
     row.classList.add('app-row');
-
+    const resultId = result["id"];
+    row.setAttribute("id", "tr-" + resultId);
     let colId = document.createElement('td');
-    colId.innerText = result["id"];
+
+    colId.innerText = resultId;
     let colName = document.createElement('td');
+    colName.setAttribute("id", "td-name");
     colName.innerText = result["name"];
     let colIngredients = document.createElement('td');
+    colIngredients.setAttribute("id", "td-ingredients");
     // noinspection JSValidateTypes
     colIngredients.innerText = result["ingredients"];
     let colInstructions = document.createElement('td');
     // noinspection JSValidateTypes
     colInstructions.innerText = result["instructions"];
+    colInstructions.setAttribute("id", "td-instructions");
     let colActions = document.createElement('td');
-    colActions.append(ul_buttons(result["id"]));
+    colActions.append(ul_buttons(resultId));
 
     row.appendChild(colId);
     row.appendChild(colName);
@@ -92,19 +111,6 @@ const ul_buttons = (id) => {
     }
 
     function createBtn(id, btnTitle, imgSrc) {
-        function addBtnBackgroundColor() {
-            switch (btnTitle) {
-                case "Edit":
-                    btn.classList.add("btn-success");
-                    break;
-                case "Delete":
-                    btn.classList.add("btn-danger");
-                    break;
-                default:
-                    btn.classList.add("btn-primary");
-            }
-        }
-
         let btn = document.createElement("button");
 
         btn.setAttribute("title", btnTitle);
@@ -116,12 +122,29 @@ const ul_buttons = (id) => {
         btn.classList.add("btn");
         btn.classList.add("btn-sm");
         btn.classList.add("rounded-2");
-        addBtnBackgroundColor();
+        addBtnCustomAttributes();
 
         let img = document.createElement("img");
         img.setAttribute("src", imgSrc);
 
         btn.appendChild(img);
         return btn;
+
+        function addBtnCustomAttributes() {
+            switch (btnTitle) {
+                case "Edit":
+                    btn.classList.add("btn-success");
+                    btn.classList.add("recipe-edit");
+                    break;
+                case "Delete":
+                    btn.classList.add("btn-danger");
+                    btn.classList.add("recipe-delete");
+                    break;
+                default:
+                    btn.classList.add("btn-primary");
+                    btn.classList.add("recipe-add-edit");
+            }
+        }
+
     }
 }

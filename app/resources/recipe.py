@@ -44,7 +44,7 @@ class Recipe(MethodView):
     def delete(self, recipe_id):
         recipes = open_db()["recipes"]
         index = next((i for i, item in enumerate(recipes) if item["id"] == recipe_id), None)
-        if not index:
+        if index is None:
             abort(404, message="Recipe not found")
         del recipes[index]
         save_db({"recipes": recipes})
