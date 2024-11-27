@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/": {
+    "/hello": {
       "get": {
         "summary": "Get a hello world message",
         "responses": {

@@ -9,11 +9,11 @@ from app.schemas import RecipeSchema, RecipeUpdateSchema
 blueprint = Blueprint("Recipe", "recipes", description="Operation in recipes")
 
 
-@blueprint.route("/")
+@blueprint.route("/hello")
 class Home(MethodView):
     @blueprint.response(200)
     def get(self):
-        return "Hello, world!"
+        return "Hello, World!"
 
 
 @blueprint.route("/recipe/<string:recipe_id>")
