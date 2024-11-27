@@ -12,11 +12,6 @@ h1 {
     font-family: "Comic Sans MS", serif;
 }
 
-#div-create-form {
-    display: none;
-    /*visibility: hidden;*/
-}
-
 #app-table-result th {
     font-size: 14px;
 }
@@ -42,11 +37,44 @@ h1 {
     padding-left: 0;
 }
 
-#div-plus {
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .recipe-add-edit {
     display: none;
+}
+
+#div-two-actions {
+    display: flex;
+}
+
+#div-plus {
+    width: 10%;
+}
+
+#div-search {
+    width: 90%;
+}
+
+#div-create-form {
+    display: none;
+}
+
+.col-form-label {
+    font-size: 12px;
+}
+
+@media only screen and (max-width: 600px) {
+    .col-form-label {
+        display: none;
+    }
+    #name::placeholder, #ingredients::placeholder, #instructions::placeholder{
+        visibility: visible;
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    .col-form-label {
+        display: block;
+    }
+    #name::placeholder, #ingredients::placeholder, #instructions::placeholder{
+        visibility: hidden;
+    }
 }
