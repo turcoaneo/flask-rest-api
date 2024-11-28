@@ -5,11 +5,24 @@ export const IDLE_TIME_SEC = 30;
 export const APP_TIMEOUT_MILLI = 2000;
 export const BTN_PLUS = "+";
 export const BTN_MINUS = "-";
-
-export const ID_SEP = "-"
+export const ID_SEP = "-";
+export const EDIT_TEXTFIELD = "textarea";
 
 export const userInputElement = document.getElementById("input-text");
 export const submitButton = document.getElementById("create-button");
+
+export const TD_ID_PREFIX = "td";
+
+export const deepEqual = (x, y) => {
+    const ok = Object.keys, tx = typeof x, ty = typeof y, cx = x.constructor, cy = y.constructor;
+    return x && y
+    && tx === 'object'
+    && tx === ty
+    && cx === cy ? (
+        ok(x).length === ok(y).length &&
+        ok(x).every(key => deepEqual(x[key], y[key]))
+    ) : (x.trim === y.trim);
+}
 
 export const cleanTable = () => {
     let rows = document.querySelectorAll(".app-row");
@@ -73,10 +86,10 @@ const processResult = (result, table) => {
     const resultId = result["id"];
     row.setAttribute("id", "tr" + ID_SEP + resultId);
 
-    setCol("id")
-    setCol("name");
-    setCol("ingredients");
-    setCol("instructions");
+    setCol("id", TD_ID_PREFIX)
+    setCol("name", TD_ID_PREFIX);
+    setCol("ingredients", TD_ID_PREFIX);
+    setCol("instructions", TD_ID_PREFIX);
 
     let colActions = document.createElement('td');
     colActions.append(ul_buttons(resultId));
@@ -84,9 +97,9 @@ const processResult = (result, table) => {
 
     table.appendChild(row);
 
-    function setCol(col) {
+    function setCol(col, tdIdPrefix) {
         let td = document.createElement('td');
-        td.setAttribute("id", "td" + ID_SEP + col);
+        td.setAttribute("id", tdIdPrefix + ID_SEP + col);
         td.innerText = result[col];
         row.appendChild(td);
     }

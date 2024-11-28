@@ -1,10 +1,10 @@
 import {
-    buildAppTable, cleanTable, clearFormData, getCreateFormData, getRecipeIdFromElementId, getUpdateFormData,
-    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS,
-    recipeEndpoint, submitButton, userInputElement,
+    buildAppTable, cleanTable, clearFormData, getCreateFormData, getRecipeIdFromElementId, getUpdateFormData, deepEqual,
+    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS, EDIT_TEXTFIELD,
+    recipeEndpoint, submitButton, userInputElement, TD_ID_PREFIX,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
-import {getUserInput, setCell, toggleButtons} from "./utils_update.js";
+import {getUserInput, resetTableRow, setCell, toggleButtons} from "./utils_update.js";
 
 let searchId = MISSING_ID;
 let startTime = new Date().getTime();
@@ -14,7 +14,7 @@ const createDeleteItemEventListener = async () => {
     deleteButtonList.forEach(deleteButton => {
         deleteButton.addEventListener('click', async () => {
             searchId = getRecipeIdFromElementId(deleteButton);
-            // console.log("Update button: ", searchId);
+            // console.log("Delete button: ", searchId);
             await deleteRecipe();
         })
     })
@@ -24,7 +24,7 @@ const createUpdateItemEventListener = async () => {
     const updateButtonList = document.querySelectorAll(".recipe-edit");
 
     function setNewText(formMap, id) {
-        formMap.set(id, document.getElementById("textarea" + ID_SEP + id).value);
+        formMap.set(id, document.getElementById(EDIT_TEXTFIELD + ID_SEP + id).value);
     }
 
     updateButtonListener(updateButtonList, setNewText);
@@ -175,9 +175,10 @@ function updateButtonListener(updateButtonList, setNewText) {
                 let rowId = getRecipeIdFromElementId(row);
                 if (searchId === rowId) {
                     // console.log("Tr: " + rowId);
+                    const prevObj = {};
                     for (let j = 1; j < row.cells.length - 1; j++) {
                         let cell = row.cells[j];
-                        setCell(cell, getRecipeIdFromElementId(cell), ID_SEP);
+                        setCell(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj);
                     }
                     const addNewBtn = document.getElementById("Add" + ID_SEP + searchId);
                     toggleButtons(updateButton, addNewBtn);
@@ -185,14 +186,19 @@ function updateButtonListener(updateButtonList, setNewText) {
                     addNewBtn.addEventListener('click', async () => {
                         const userInput = getUpdateFormData(getUserInput(setNewText));
                         toggleButtons(addNewBtn, updateButton);
-                        await updateRecipe(userInput);
+                        const newObj = JSON.parse(userInput);
+                        if (deepEqual(newObj, prevObj)) {
+                            console.log("Prev values not changed: ", prevObj);
+                            resetTableRow(row, newObj, TD_ID_PREFIX, ID_SEP);
+                        } else {
+                            await updateRecipe(userInput);
+                        }
                     });
                 }
             }
         })
     })
 }
-
 
 window.onload = () => {
     checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
