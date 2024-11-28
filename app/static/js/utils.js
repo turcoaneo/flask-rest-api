@@ -3,6 +3,10 @@ export const recipeEndpoint = "recipe";
 export const MISSING_ID = -1;
 export const IDLE_TIME_SEC = 30;
 export const APP_TIMEOUT_MILLI = 2000;
+export const BTN_PLUS = "+";
+export const BTN_MINUS = "-";
+
+export const ID_SEP = "-"
 
 export const userInputElement = document.getElementById("input-text");
 export const submitButton = document.getElementById("create-button");
@@ -15,7 +19,7 @@ export const cleanTable = () => {
 }
 
 export const getRecipeIdFromElementId = (element) => {
-    return element.getAttribute("id").split("-")[1];
+    return element.getAttribute("id").split(ID_SEP)[1];
 }
 
 export const clearFormData = () => {
@@ -67,7 +71,7 @@ const processResult = (result, table) => {
     let row = document.createElement('tr');
     row.classList.add("app-row");
     const resultId = result["id"];
-    row.setAttribute("id", "tr-" + resultId);
+    row.setAttribute("id", "tr" + ID_SEP + resultId);
 
     setCol("id")
     setCol("name");
@@ -82,7 +86,7 @@ const processResult = (result, table) => {
 
     function setCol(col) {
         let td = document.createElement('td');
-        td.setAttribute("id", "td-" + col);
+        td.setAttribute("id", "td" + ID_SEP + col);
         td.innerText = result[col];
         row.appendChild(td);
     }
@@ -92,7 +96,7 @@ const ul_buttons = (id) => {
     let btnList = document.createElement("ul");
     btnList.classList.add("list-inline");
     btnList.classList.add("m-1");
-    btnList.setAttribute("id", "ul-buttons-" + id);
+    btnList.setAttribute("id", "ul-buttons" + ID_SEP + id);
 
     createLi(createBtn(id, "Add", "../static/icons/table.svg"));
     createLi(createBtn(id, "Edit", "../static/icons/pencil-square.svg"));
@@ -111,7 +115,7 @@ const ul_buttons = (id) => {
         let btn = document.createElement("button");
 
         btn.setAttribute("title", btnTitle);
-        btn.setAttribute("id", btnTitle + "-" + id);
+        btn.setAttribute("id", btnTitle + ID_SEP + id);
         btn.setAttribute("type", "button");
 
         btn.classList.add("btn");
