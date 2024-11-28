@@ -1,6 +1,6 @@
 import {
     buildAppTable, cleanTable, clearFormData, getCreateFormData, getRecipeIdFromElementId, getUpdateFormData,
-    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS,
+    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS, EDIT_TEXTFIELD,
     recipeEndpoint, submitButton, userInputElement,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
@@ -14,7 +14,7 @@ const createDeleteItemEventListener = async () => {
     deleteButtonList.forEach(deleteButton => {
         deleteButton.addEventListener('click', async () => {
             searchId = getRecipeIdFromElementId(deleteButton);
-            // console.log("Update button: ", searchId);
+            // console.log("Delete button: ", searchId);
             await deleteRecipe();
         })
     })
@@ -24,7 +24,7 @@ const createUpdateItemEventListener = async () => {
     const updateButtonList = document.querySelectorAll(".recipe-edit");
 
     function setNewText(formMap, id) {
-        formMap.set(id, document.getElementById("textarea" + ID_SEP + id).value);
+        formMap.set(id, document.getElementById(EDIT_TEXTFIELD + ID_SEP + id).value);
     }
 
     updateButtonListener(updateButtonList, setNewText);

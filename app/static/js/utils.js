@@ -5,8 +5,8 @@ export const IDLE_TIME_SEC = 30;
 export const APP_TIMEOUT_MILLI = 2000;
 export const BTN_PLUS = "+";
 export const BTN_MINUS = "-";
-
-export const ID_SEP = "-"
+export const ID_SEP = "-";
+export const EDIT_TEXTFIELD = "textarea";
 
 export const userInputElement = document.getElementById("input-text");
 export const submitButton = document.getElementById("create-button");
