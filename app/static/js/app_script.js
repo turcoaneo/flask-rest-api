@@ -1,6 +1,7 @@
 import {
     buildAppTable, cleanTable, clearFormData, getCreateFormData, getRecipeIdFromElementId, getUpdateFormData,
-    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, recipeEndpoint, submitButton, userInputElement,
+    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS,
+    recipeEndpoint, submitButton, userInputElement,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
 import {getUserInput, setCell, toggleButtons} from "./utils_update.js";
@@ -23,7 +24,7 @@ const createUpdateItemEventListener = async () => {
     const updateButtonList = document.querySelectorAll(".recipe-edit");
 
     function setNewText(formMap, id) {
-        formMap.set(id, document.getElementById("textarea-" + id).value);
+        formMap.set(id, document.getElementById("textarea" + ID_SEP + id).value);
     }
 
     updateButtonListener(updateButtonList, setNewText);
@@ -153,12 +154,12 @@ const deleteRecipe = () => {
 
 function addOrClearFormDiv(addButton) {
     const divCreateForm = document.getElementById('div-create-form');
-    if (addButton.innerText === "+") {
+    if (addButton.innerText === BTN_PLUS) {
         divCreateForm.style.display = "block";
-        addButton.innerText = "-";
+        addButton.innerText = BTN_MINUS;
     } else {
         divCreateForm.style.display = "none";
-        addButton.innerText = "+";
+        addButton.innerText = BTN_PLUS;
     }
 }
 
@@ -176,9 +177,9 @@ function updateButtonListener(updateButtonList, setNewText) {
                     // console.log("Tr: " + rowId);
                     for (let j = 1; j < row.cells.length - 1; j++) {
                         let cell = row.cells[j];
-                        setCell(cell, getRecipeIdFromElementId(cell));
+                        setCell(cell, getRecipeIdFromElementId(cell), ID_SEP);
                     }
-                    const addNewBtn = document.getElementById("Add-" + searchId);
+                    const addNewBtn = document.getElementById("Add" + ID_SEP + searchId);
                     toggleButtons(updateButton, addNewBtn);
 
                     addNewBtn.addEventListener('click', async () => {
