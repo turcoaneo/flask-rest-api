@@ -1,7 +1,7 @@
 import {
     buildAppTable, cleanTable, clearFormData, getCreateFormData, getRecipeIdFromElementId, getUpdateFormData, deepEqual,
-    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS, EDIT_TEXTFIELD,
-    recipeEndpoint, submitButton, userInputElement, TD_ID_PREFIX,
+    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS, EDIT_TEXTFIELD, BTN_TEXT_ADD,
+    TD_ID_PREFIX, COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS, recipeEndpoint, submitButton, userInputElement,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
 import {getUserInput, resetTableRow, setCell, toggleButtons} from "./utils_update.js";
@@ -180,16 +180,18 @@ function updateButtonListener(updateButtonList, setNewText) {
                         let cell = row.cells[j];
                         setCell(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj);
                     }
-                    const addNewBtn = document.getElementById("Add" + ID_SEP + searchId);
+                    const addNewBtn = document.getElementById(BTN_TEXT_ADD + ID_SEP + searchId);
                     toggleButtons(updateButton, addNewBtn);
 
                     addNewBtn.addEventListener('click', async () => {
-                        const userInput = getUpdateFormData(getUserInput(setNewText));
+                        const userInput = getUpdateFormData(getUserInput(setNewText,
+                            [COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS]));
                         toggleButtons(addNewBtn, updateButton);
                         const newObj = JSON.parse(userInput);
                         if (deepEqual(newObj, prevObj)) {
                             console.log("Prev values not changed: ", prevObj);
-                            resetTableRow(row, newObj, TD_ID_PREFIX, ID_SEP);
+                            resetTableRow(row, newObj, TD_ID_PREFIX, ID_SEP,
+                                [COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS]);
                         } else {
                             await updateRecipe(userInput);
                         }

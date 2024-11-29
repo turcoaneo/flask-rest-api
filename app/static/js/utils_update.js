@@ -18,11 +18,11 @@ export const setCell = (cell, cellId, idSep, textfieldName, previousValues) => {
     }
 }
 
-export const getUserInput = (setNewText) => {
+export const getUserInput = (setNewText, cols) => {
     let formMap = new Map();
-    setNewText(formMap, "name");
-    setNewText(formMap, "ingredients");
-    setNewText(formMap, "instructions");
+    setNewText(formMap, cols[0]);
+    setNewText(formMap, cols[1]);
+    setNewText(formMap, cols[2]);
     return formMap;
 }
 
@@ -31,8 +31,8 @@ export const toggleButtons = (visibleBtn, hiddenBtn) => {
     hiddenBtn.style.display = "block";
 }
 
-export const resetTableRow = (row, newObj, tdIdPrefix, idSep) => {
-    row.children[tdIdPrefix + idSep + "name"].innerText = newObj["name"];
-    row.children[tdIdPrefix + idSep + "ingredients"].innerText = newObj["ingredients"];
-    row.children[tdIdPrefix + idSep + "instructions"].innerText = newObj["instructions"];
+export const resetTableRow = (row, newObj, tdIdPrefix, idSep, cols) => {
+    row.children[tdIdPrefix + idSep + cols[0]].innerText = newObj["name"];
+    row.children[tdIdPrefix + idSep + cols[1]].innerText = newObj["ingredients"];
+    row.children[tdIdPrefix + idSep + cols[2]].innerText = newObj["instructions"];
 }

@@ -8,6 +8,15 @@ export const BTN_MINUS = "-";
 export const ID_SEP = "-";
 export const EDIT_TEXTFIELD = "textarea";
 
+export const BTN_TEXT_ADD = "Add";
+const BTN_TEXT_DELETE = "Delete";
+const BTN_TEXT_EDIT = "Edit";
+
+const COL_ID = "id";
+export const COL_NAME = "name";
+export const COL_INGREDIENTS = "ingredients";
+export const COL_INSTRUCTIONS = "instructions";
+
 export const userInputElement = document.getElementById("input-text");
 export const submitButton = document.getElementById("create-button");
 
@@ -86,22 +95,21 @@ const processResult = (result, table) => {
     const resultId = result["id"];
     row.setAttribute("id", "tr" + ID_SEP + resultId);
 
-    setCol("id", TD_ID_PREFIX)
-    setCol("name", TD_ID_PREFIX);
-    setCol("ingredients", TD_ID_PREFIX);
-    setCol("instructions", TD_ID_PREFIX);
+    setCols(result, row, TD_ID_PREFIX);
 
     let colActions = document.createElement('td');
     colActions.append(ul_buttons(resultId));
     row.appendChild(colActions);
 
     table.appendChild(row);
-
-    function setCol(col, tdIdPrefix) {
-        let td = document.createElement('td');
-        td.setAttribute("id", tdIdPrefix + ID_SEP + col);
-        td.innerText = result[col];
-        row.appendChild(td);
+    function setCols(result, row, tdIdPrefix) {
+        const cols = [COL_ID, COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS];
+        cols.forEach(col => {
+            let td = document.createElement('td');
+            td.setAttribute("id", tdIdPrefix + ID_SEP + col);
+            td.innerText = result[col];
+            row.appendChild(td);
+        })
     }
 }
 
@@ -111,9 +119,9 @@ const ul_buttons = (id) => {
     btnList.classList.add("m-1");
     btnList.setAttribute("id", "ul-buttons" + ID_SEP + id);
 
-    createLi(createBtn(id, "Add", "../static/icons/table.svg"));
-    createLi(createBtn(id, "Edit", "../static/icons/pencil-square.svg"));
-    createLi(createBtn(id, "Delete", "../static/icons/trash.svg"));
+    createLi(createBtn(id, BTN_TEXT_ADD, "../static/icons/table.svg"));
+    createLi(createBtn(id, BTN_TEXT_EDIT, "../static/icons/pencil-square.svg"));
+    createLi(createBtn(id, BTN_TEXT_DELETE, "../static/icons/trash.svg"));
 
     return btnList;
 
@@ -146,11 +154,11 @@ const ul_buttons = (id) => {
 
         function addBtnCustomAttributes() {
             switch (btnTitle) {
-                case "Edit":
+                case BTN_TEXT_EDIT:
                     btn.classList.add("btn-success");
                     btn.classList.add("recipe-edit");
                     break;
-                case "Delete":
+                case BTN_TEXT_DELETE:
                     btn.classList.add("btn-danger");
                     btn.classList.add("recipe-delete");
                     break;
