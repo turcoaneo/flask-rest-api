@@ -30,7 +30,7 @@ export const deepEqual = (x, y) => {
     && cx === cy ? (
         ok(x).length === ok(y).length &&
         ok(x).every(key => deepEqual(x[key], y[key]))
-    ) : (x.trim === y.trim);
+    ) : (x === y);
 }
 
 export const cleanTable = () => {
@@ -76,7 +76,9 @@ function prepareFormData(formData) {
             delete data[key];
         }
         if (key === "ingredients") {
-            data[key] = prop.split(',');
+            data[key] = prop.split(',').map(function (item) {
+                return item.trim();
+            });
         }
     }
 
@@ -102,6 +104,7 @@ const processResult = (result, table) => {
     row.appendChild(colActions);
 
     table.appendChild(row);
+
     function setCols(result, row, tdIdPrefix) {
         const cols = [COL_ID, COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS];
         cols.forEach(col => {

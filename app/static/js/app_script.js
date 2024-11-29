@@ -9,6 +9,15 @@ import {getUserInput, resetTableRow, setCell, toggleButtons} from "./utils_updat
 let searchId = MISSING_ID;
 let startTime = new Date().getTime();
 
+
+window.onload = () => {
+    checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
+    createSearchItemEventListener().then(() => console.log("Search item event listener created!"));
+    createAddItemEventListener().then(() => console.log("Add item event listener created!"));
+    createBtnEnableFormEventListener().then(() => console.log("Plus-minus button item event listener created!"));
+    enableCreateButtonEventListeners().then(() => console.log("Enable submit button event listeners created!"));
+}
+
 const createDeleteItemEventListener = async () => {
     const deleteButtonList = document.querySelectorAll('.recipe-delete');
     deleteButtonList.forEach(deleteButton => {
@@ -22,7 +31,6 @@ const createDeleteItemEventListener = async () => {
 
 const createUpdateItemEventListener = async () => {
     const updateButtonList = document.querySelectorAll(".recipe-edit");
-
     updateButtonListener(updateButtonList);
 }
 
@@ -166,42 +174,50 @@ function updateButtonListener(updateButtonList) {
             searchId = getRecipeIdFromElementId(updateButton);
             // console.log("Update button: ", searchId);
             const resultTable = document.getElementById("app-table-result");
-            for (let i = 1; i < resultTable.rows.length; i++) {
+            const tableRowSize = resultTable.rows.length;
+            for (let i = 1; i < tableRowSize; i++) {
                 let row = resultTable.rows[i];
-                let rowId = getRecipeIdFromElementId(row);
-                if (searchId === rowId) {
-                    // console.log("Tr: " + rowId);
-                    const prevObj = {};
-                    for (let j = 1; j < row.cells.length - 1; j++) {
-                        let cell = row.cells[j];
-                        setCell(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj);
-                    }
-                    const addNewBtn = document.getElementById(BTN_TEXT_ADD + ID_SEP + searchId);
-                    toggleButtons(updateButton, addNewBtn);
-
-                    addNewBtn.addEventListener('click', async () => {
-                        const userInput = getUpdateFormData(
-                            getUserInput([COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS], EDIT_TEXTFIELD, ID_SEP));
-                        toggleButtons(addNewBtn, updateButton);
-                        const newObj = JSON.parse(userInput);
-                        if (deepEqual(newObj, prevObj)) {
-                            console.log("Prev values not changed: ", prevObj);
-                            resetTableRow(row, newObj, TD_ID_PREFIX, ID_SEP,
-                                [COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS]);
-                        } else {
-                            await updateRecipe(userInput);
-                        }
-                    });
+                let isProcessed = processRowForUpdate(row, updateButton);
+                if (isProcessed) {
+                    break;
                 }
             }
         })
     })
 }
 
-window.onload = () => {
-    checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
-    createSearchItemEventListener().then(() => console.log("Search item event listener created!"));
-    createAddItemEventListener().then(() => console.log("Add item event listener created!"));
-    createBtnEnableFormEventListener().then(() => console.log("Plus-minus button item event listener created!"));
-    enableCreateButtonEventListeners().then(() => console.log("Enable submit button event listeners created!"));
+function processRowForUpdate(row, updateButton) {
+    let rowId = getRecipeIdFromElementId(row);
+    let result = false;
+    if (searchId === rowId) {
+        // console.log("Tr: " + rowId);
+        const prevObj = {};
+        for (let j = 1; j < row.cells.length - 1; j++) {
+            let cell = row.cells[j];
+            setCell(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj);
+        }
+        const addNewBtn = document.getElementById(BTN_TEXT_ADD + ID_SEP + searchId);
+        toggleButtons(updateButton, addNewBtn);
+
+        createNewItemBtnEventListener(addNewBtn, updateButton, prevObj, row);
+        result = true;
+    }
+    return result;
+}
+
+function createNewItemBtnEventListener(addNewBtn, updateButton, prevObj, row) {
+    addNewBtn.addEventListener('click', async () => {
+        const userInput = getUpdateFormData(
+            getUserInput([COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS], EDIT_TEXTFIELD, ID_SEP));
+        toggleButtons(addNewBtn, updateButton);
+        const newObj = JSON.parse(userInput);
+        const hasNotChanged = deepEqual(newObj, prevObj);
+        if (hasNotChanged) {
+            console.log("Prev values not changed: ", prevObj);
+            resetTableRow(row, newObj, TD_ID_PREFIX, ID_SEP,
+                [COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS]);
+        } else {
+            await updateRecipe(userInput);
+        }
+    });
 }
