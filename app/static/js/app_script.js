@@ -1,10 +1,32 @@
 import {
-    buildAppTable, cleanTable, clearFormData, getCreateFormData, getRecipeIdFromElementId, getUpdateFormData, deepEqual,
-    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS, EDIT_TEXTFIELD, BTN_TEXT_ADD,
-    TD_ID_PREFIX, COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS, RECIPE_ENDPOINT, submitButton, userInputElement,
+    buildAppTable,
+    cleanTable,
+    clearFormData,
+    getCreateFormData,
+    getRecipeIdFromElementId,
+    getUpdateFormData,
+    deepEqual,
+    resetTableRow,
+    MISSING_ID,
+    WEB_URL,
+    IDLE_TIME_SEC,
+    APP_TIMEOUT_MILLI,
+    ID_SEP,
+    BTN_PLUS,
+    BTN_MINUS,
+    EDIT_TEXTFIELD,
+    BTN_TEXT_ADD,
+    TD_ID_PREFIX,
+    COL_NAME,
+    COL_INGREDIENTS,
+    COL_INSTRUCTIONS,
+    RECIPE_ENDPOINT,
+    submitButton,
+    userInputElement,
+    SPLITTER,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
-import {getUserInput, resetTableRow, setCell, toggleButtons} from "./utils_update.js";
+import {getUserInput, setCellAndRecordPreviousValue, toggleButtons} from "./utils_update.js";
 
 let searchId = MISSING_ID;
 let startTime = new Date().getTime();
@@ -194,7 +216,7 @@ function processRowForUpdate(row, updateButton) {
         const prevObj = {};
         for (let j = 1; j < row.cells.length - 1; j++) {
             let cell = row.cells[j];
-            setCell(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj);
+            setCellAndRecordPreviousValue(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj, SPLITTER);
         }
         const addNewBtn = document.getElementById(BTN_TEXT_ADD + ID_SEP + searchId);
         toggleButtons(updateButton, addNewBtn);

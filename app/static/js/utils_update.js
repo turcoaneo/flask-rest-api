@@ -1,4 +1,4 @@
-export const setCell = (cell, cellId, idSep, textfieldName, previousValues) => {
+export const setCellAndRecordPreviousValue = (cell, cellId, idSep, textfieldName, previousValues, splitter) => {
     const content = cell.innerText;
 
     // console.log("Td: ", content);
@@ -10,7 +10,7 @@ export const setCell = (cell, cellId, idSep, textfieldName, previousValues) => {
     cell.innerHTML = null;
     cell.appendChild(textField);
     if (cellId === "ingredients") {
-        previousValues[cellId] = content.split(",").map(function (item) {
+        previousValues[cellId] = content.split(splitter).map(function (item) {
             return item.trim();
         });
     } else {
@@ -21,12 +21,6 @@ export const setCell = (cell, cellId, idSep, textfieldName, previousValues) => {
 export const toggleButtons = (visibleBtn, hiddenBtn) => {
     visibleBtn.style.display = "none";
     hiddenBtn.style.display = "block";
-}
-
-export const resetTableRow = (row, newObj, tdIdPrefix, idSep, cols) => {
-    row.children[tdIdPrefix + idSep + cols[0]].innerText = newObj["name"];
-    row.children[tdIdPrefix + idSep + cols[1]].innerText = newObj["ingredients"];
-    row.children[tdIdPrefix + idSep + cols[2]].innerText = newObj["instructions"];
 }
 
 export const getUserInput = (cols, editTextfield, idSep) => {

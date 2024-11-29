@@ -16,6 +16,7 @@ const COL_ID = "id";
 export const COL_NAME = "name";
 export const COL_INGREDIENTS = "ingredients";
 export const COL_INSTRUCTIONS = "instructions";
+export const SPLITTER = ",";
 
 export const userInputElement = document.getElementById("input-text");
 export const submitButton = document.getElementById("create-button");
@@ -91,6 +92,26 @@ const getFormData = (form) => {
     return prepareFormData(formData);
 }
 
+function getFormattedContent(words) {
+    if (Array.isArray(words)) {
+        let content = "";
+        const spacer = " ";
+        length = words.length;
+        for (let i = 0; i < length - 1; i++) {
+            content += words[i].trim() + SPLITTER + spacer;
+        }
+        content += words[length - 1];
+        return content;
+    }
+    return words;
+}
+
+export const resetTableRow = (row, newObj, tdIdPrefix, idSep, cols) => {
+    row.children[tdIdPrefix + idSep + cols[0]].innerText = newObj[cols[0]];
+    row.children[tdIdPrefix + idSep + cols[1]].innerText = getFormattedContent(newObj[cols[1]]);
+    row.children[tdIdPrefix + idSep + cols[2]].innerText = newObj[cols[2]];
+}
+
 const processResult = (result, table) => {
     let row = document.createElement('tr');
     row.classList.add("app-row");
@@ -110,7 +131,8 @@ const processResult = (result, table) => {
         cols.forEach(col => {
             let td = document.createElement('td');
             td.setAttribute("id", tdIdPrefix + ID_SEP + col);
-            td.innerText = result[col];
+            td.innerText = getFormattedContent(result[col]);
+            // td.innerText = result[col];
             row.appendChild(td);
         })
     }
