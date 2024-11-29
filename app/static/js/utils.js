@@ -1,5 +1,5 @@
 export const WEB_URL = "http://127.0.0.1:5000/";
-export const recipeEndpoint = "recipe";
+export const RECIPE_ENDPOINT = "recipe";
 export const MISSING_ID = -1;
 export const IDLE_TIME_SEC = 30;
 export const APP_TIMEOUT_MILLI = 2000;

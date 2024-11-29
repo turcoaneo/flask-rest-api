@@ -1,7 +1,7 @@
 import {
     buildAppTable, cleanTable, clearFormData, getCreateFormData, getRecipeIdFromElementId, getUpdateFormData, deepEqual,
     MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS, EDIT_TEXTFIELD, BTN_TEXT_ADD,
-    TD_ID_PREFIX, COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS, recipeEndpoint, submitButton, userInputElement,
+    TD_ID_PREFIX, COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS, RECIPE_ENDPOINT, submitButton, userInputElement,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
 import {getUserInput, resetTableRow, setCell, toggleButtons} from "./utils_update.js";
@@ -23,11 +23,7 @@ const createDeleteItemEventListener = async () => {
 const createUpdateItemEventListener = async () => {
     const updateButtonList = document.querySelectorAll(".recipe-edit");
 
-    function setNewText(formMap, id) {
-        formMap.set(id, document.getElementById(EDIT_TEXTFIELD + ID_SEP + id).value);
-    }
-
-    updateButtonListener(updateButtonList, setNewText);
+    updateButtonListener(updateButtonList);
 }
 
 const checkServerItemEventListener = async () => {
@@ -91,7 +87,7 @@ const enableCreateButtonEventListeners = async () => {
 
 const getItem = async (userInput) => {
     let id = userInput.value;
-    const promise = apiCall(id, WEB_URL, recipeEndpoint, "GET", null);
+    const promise = apiCall(id, WEB_URL, RECIPE_ENDPOINT, "GET", null);
     promise
         .then((result) => {
             cleanTable();
@@ -119,7 +115,7 @@ const getHelloWorld = async () => {
 }
 
 const createRecipe = (userInput) => {
-    const promise = apiCall(null, WEB_URL, recipeEndpoint, "POST", userInput);
+    const promise = apiCall(null, WEB_URL, RECIPE_ENDPOINT, "POST", userInput);
     promise
         .then((result) => {
             getItem("").then(() => console.log(result));
@@ -131,7 +127,7 @@ const createRecipe = (userInput) => {
 
 const updateRecipe = (userInput) => {
     // console.log(userInput);
-    const promise = apiCall(searchId, WEB_URL, recipeEndpoint, "PUT", userInput);
+    const promise = apiCall(searchId, WEB_URL, RECIPE_ENDPOINT, "PUT", userInput);
     promise
         .then((result) => {
             getItem("").then(() => console.log(result));
@@ -142,7 +138,7 @@ const updateRecipe = (userInput) => {
 }
 
 const deleteRecipe = () => {
-    const promise = apiCall(searchId, WEB_URL, recipeEndpoint, "DELETE", null);
+    const promise = apiCall(searchId, WEB_URL, RECIPE_ENDPOINT, "DELETE", null);
     promise
         .then(() => {
             getItem("").then(() => console.log("Re-fetching after delete"));
@@ -163,7 +159,7 @@ function addOrClearFormDiv(addButton) {
     }
 }
 
-function updateButtonListener(updateButtonList, setNewText) {
+function updateButtonListener(updateButtonList) {
     updateButtonList.forEach(updateButton => {
         updateButton.addEventListener('click', async (evt) => {
             evt.preventDefault();
@@ -184,8 +180,8 @@ function updateButtonListener(updateButtonList, setNewText) {
                     toggleButtons(updateButton, addNewBtn);
 
                     addNewBtn.addEventListener('click', async () => {
-                        const userInput = getUpdateFormData(getUserInput(setNewText,
-                            [COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS]));
+                        const userInput = getUpdateFormData(
+                            getUserInput([COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS], EDIT_TEXTFIELD, ID_SEP));
                         toggleButtons(addNewBtn, updateButton);
                         const newObj = JSON.parse(userInput);
                         if (deepEqual(newObj, prevObj)) {
