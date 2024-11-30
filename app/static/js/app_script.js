@@ -7,13 +7,12 @@ import {
     getUpdateFormData,
     deepEqual,
     resetTableRowForm,
+    addOrClearFormDiv,
     MISSING_ID,
     WEB_URL,
     IDLE_TIME_SEC,
     APP_TIMEOUT_MILLI,
     ID_SEP,
-    BTN_PLUS,
-    BTN_MINUS,
     EDIT_TEXTFIELD,
     BTN_TEXT_ADD,
     TD_ID_PREFIX,
@@ -44,85 +43,6 @@ window.onload = () => {
     createAddItemEventListener().then(() => console.log("Add item event listener created!"));
     createBtnEnableFormEventListener().then(() => console.log("Plus-minus button item event listener created!"));
     enableCreateButtonEventListeners().then(() => console.log("Enable submit button event listeners created!"));
-}
-
-function onCLickHandlerDelete(deleteButton) {
-    return async () => {
-        searchId = getRecipeIdFromElementId(deleteButton);
-        // console.log("Delete button: ", searchId);
-        await deleteRecipe();
-    };
-}
-
-const createDeleteItemEventListener = async () => {
-    const deleteButtonList = document.querySelectorAll('.recipe-delete');
-    deleteButtonList.forEach(deleteButton => {
-        deleteButton.addEventListener('click', onCLickHandlerDelete(deleteButton))
-    })
-}
-
-const createUpdateItemEventListener = async () => {
-    const updateButtonList = document.querySelectorAll(".recipe-edit");
-    updateButtonListener(updateButtonList);
-}
-
-const checkServerItemEventListener = async () => {
-    const checkingDiv = document.getElementById("div-two-actions");
-    checkingDiv.addEventListener('mouseover', async () => {
-        let stopTime = new Date().getTime();
-        let elapsedTime = (stopTime - startTime) / 1000;
-        // console.log(elapsedTime);
-        if (elapsedTime > IDLE_TIME_SEC) {
-            startTime = stopTime;
-            console.log("Checking server as having been idle for: ", elapsedTime);
-            setTimeout(await getHelloWorld, APP_TIMEOUT_MILLI);
-        }
-    })
-}
-
-const createSearchItemEventListener = async () => {
-    const findButton = document.getElementById('find-button');
-    findButton.addEventListener('click', async () => {
-        await getItem(userInputElement);
-    })
-}
-
-const createAddItemEventListener = async () => {
-    submitButton.addEventListener('click', async (evt) => {
-        evt.preventDefault();
-        let data = getCreateFormData();
-        await createRecipe(data);
-        clearFormData();
-    })
-}
-
-const createBtnEnableFormEventListener = async () => {
-    const addButton = document.getElementById('toggle-show-create-form-button');
-    addButton.addEventListener('click', async (evt) => {
-        evt.preventDefault();
-        await addOrClearFormDiv(addButton);
-    })
-}
-
-const enableCreateButtonEventListeners = async () => {
-    const name = document.getElementById('name')
-    const ingredients = document.getElementById('ingredients')
-    const instructions = document.getElementById('instructions')
-
-    function updateSubmitBtn() {
-        const nameValue = name.value.trim();
-        const ingredientsValue = ingredients.value.trim();
-        const instructionsValue = instructions.value.trim();
-        if (nameValue && ingredientsValue && instructionsValue) {
-            submitButton.removeAttribute('disabled');
-        } else {
-            submitButton.setAttribute('disabled', 'disabled');
-        }
-    }
-
-    name.addEventListener('mouseout', updateSubmitBtn);
-    ingredients.addEventListener('mouseout', updateSubmitBtn);
-    instructions.addEventListener('mouseout', updateSubmitBtn);
 }
 
 const getItem = async (userInput) => {
@@ -188,15 +108,93 @@ const deleteRecipe = () => {
         });
 }
 
-function addOrClearFormDiv(addButton) {
-    const divCreateForm = document.getElementById('div-create-form');
-    if (addButton.innerText === BTN_PLUS) {
-        divCreateForm.style.display = DISPLAY_BLOCK;
-        addButton.innerText = BTN_MINUS;
-    } else {
-        divCreateForm.style.display = DISPLAY_NONE;
-        addButton.innerText = BTN_PLUS;
+const createDeleteItemEventListener = async () => {
+    const deleteButtonList = document.querySelectorAll('.recipe-delete');
+    deleteButtonList.forEach(deleteButton => {
+        deleteButton.addEventListener('click', onCLickHandlerDelete(deleteButton))
+    })
+}
+
+const createUpdateItemEventListener = async () => {
+    const updateButtonList = document.querySelectorAll(".recipe-edit");
+    updateButtonListener(updateButtonList);
+}
+
+const checkServerItemEventListener = async () => {
+    const checkingDiv = document.getElementById("div-two-actions");
+    checkingDiv.addEventListener('mouseover', async () => {
+        let stopTime = new Date().getTime();
+        let elapsedTime = (stopTime - startTime) / 1000;
+        // console.log(elapsedTime);
+        if (elapsedTime > IDLE_TIME_SEC) {
+            startTime = stopTime;
+            console.log("Checking server as having been idle for: ", elapsedTime);
+            setTimeout(await getHelloWorld, APP_TIMEOUT_MILLI);
+        }
+    })
+}
+
+const createSearchItemEventListener = async () => {
+    const findButton = document.getElementById('find-button');
+    findButton.addEventListener('click', async () => {
+        await getItem(userInputElement);
+    })
+}
+
+const createAddItemEventListener = async () => {
+    submitButton.addEventListener('click', async (evt) => {
+        evt.preventDefault();
+        let data = getCreateFormData();
+        await createRecipe(data);
+        clearFormData();
+    })
+}
+
+const createBtnEnableFormEventListener = async () => {
+    const addButton = document.getElementById('toggle-show-create-form-button');
+    addButton.addEventListener('click', async (evt) => {
+        evt.preventDefault();
+        addOrClearFormDiv(addButton, DISPLAY_BLOCK, DISPLAY_NONE);
+    })
+}
+
+const enableCreateButtonEventListeners = async () => {
+    const name = document.getElementById('name')
+    const ingredients = document.getElementById('ingredients')
+    const instructions = document.getElementById('instructions')
+
+    function updateSubmitBtn() {
+        const nameValue = name.value.trim();
+        const ingredientsValue = ingredients.value.trim();
+        const instructionsValue = instructions.value.trim();
+        if (nameValue && ingredientsValue && instructionsValue) {
+            submitButton.removeAttribute('disabled');
+        } else {
+            submitButton.setAttribute('disabled', 'disabled');
+        }
     }
+
+    name.addEventListener('mouseout', updateSubmitBtn);
+    ingredients.addEventListener('mouseout', updateSubmitBtn);
+    instructions.addEventListener('mouseout', updateSubmitBtn);
+}
+
+function updateButtonListener(updateButtonList) {
+    updateButtonList.forEach(updateButton => {
+        updateButton.addEventListener('click', onClickHandlerUpdate(updateButton));
+    })
+}
+
+function createNewItemBtnEventListener(sendUpdateBtn, updateButton, prevObj, row) {
+    sendUpdateBtn.addEventListener('click', onClickHandlerAdd(row, sendUpdateBtn, updateButton, prevObj));
+}
+
+function onCLickHandlerDelete(deleteButton) {
+    return async () => {
+        searchId = getRecipeIdFromElementId(deleteButton);
+        // console.log("Delete button: ", searchId);
+        await deleteRecipe();
+    };
 }
 
 function onClickHandlerUpdate(updateButton) {
@@ -209,29 +207,23 @@ function onClickHandlerUpdate(updateButton) {
             let row = resultTable.rows[i];
             let prevObj = processRowForUpdate(row);
             if (Object.keys(prevObj).length !== 0) {
-                const addNewBtn = document.getElementById(BTN_TEXT_ADD + ID_SEP + searchId);
-                toggleButtons(updateButton, addNewBtn);
-                createNewItemBtnEventListener(addNewBtn, updateButton, prevObj, row);
+                const sendUpdateBtn = document.getElementById(BTN_TEXT_ADD + ID_SEP + searchId);
+                toggleButtons(updateButton, sendUpdateBtn);
+                createNewItemBtnEventListener(sendUpdateBtn, updateButton, prevObj, row);
                 break;
             }
         }
     };
 }
 
-function updateButtonListener(updateButtonList) {
-    updateButtonList.forEach(updateButton => {
-        updateButton.addEventListener('click', onClickHandlerUpdate(updateButton));
-    })
-}
-
-function onClickHandlerAdd(row, addNewBtn, updateButton, prevObj) {
+function onClickHandlerAdd(row, sendUpdateBtn, updateButton, prevObj) {
     return async () => {
-        if (addNewBtn.style.display === DISPLAY_NONE) {
+        if (sendUpdateBtn.style.display === DISPLAY_NONE) {
             return;
         }
         const userInput = getUpdateFormData(
             getUserInput([COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS], EDIT_TEXTFIELD, ID_SEP));
-        toggleButtons(addNewBtn, updateButton);
+        toggleButtons(sendUpdateBtn, updateButton);
         const newObj = JSON.parse(userInput);
         const hasNotChanged = deepEqual(newObj, prevObj);
         if (hasNotChanged) {
@@ -242,10 +234,6 @@ function onClickHandlerAdd(row, addNewBtn, updateButton, prevObj) {
             await updateRecipe(userInput);
         }
     };
-}
-
-function createNewItemBtnEventListener(addNewBtn, updateButton, prevObj, row) {
-    addNewBtn.addEventListener('click', onClickHandlerAdd(row, addNewBtn, updateButton, prevObj));
 }
 
 function processRowForUpdate(row) {

@@ -23,6 +23,17 @@ export const submitButton = document.getElementById("create-button");
 
 export const TD_ID_PREFIX = "td";
 
+export const addOrClearFormDiv = (addButton, showDivStyle, hideDivStyle)=> {
+    const divCreateForm = document.getElementById('div-create-form');
+    if (addButton.innerText === BTN_PLUS) {
+        divCreateForm.style.display = showDivStyle;
+        addButton.innerText = BTN_MINUS;
+    } else {
+        divCreateForm.style.display = hideDivStyle;
+        addButton.innerText = BTN_PLUS;
+    }
+}
+
 export const deepEqual = (x, y) => {
     const ok = Object.keys, tx = typeof x, ty = typeof y, cx = x.constructor, cy = y.constructor;
     return x && y
