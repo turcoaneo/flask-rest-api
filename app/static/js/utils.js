@@ -76,7 +76,7 @@ function prepareFormData(formData) {
         if (prop === "") {
             delete data[key];
         }
-        if (key === "ingredients") {
+        if (key === COL_INGREDIENTS) {
             data[key] = prop.split(',').map(function (item) {
                 return item.trim();
             });
@@ -106,7 +106,7 @@ function getFormattedContent(words) {
     return words;
 }
 
-export const resetTableRow = (row, newObj, tdIdPrefix, idSep, cols) => {
+export const resetTableRowForm = (row, newObj, tdIdPrefix, idSep, cols) => {
     row.children[tdIdPrefix + idSep + cols[0]].innerText = newObj[cols[0]];
     row.children[tdIdPrefix + idSep + cols[1]].innerText = getFormattedContent(newObj[cols[1]]);
     row.children[tdIdPrefix + idSep + cols[2]].innerText = newObj[cols[2]];

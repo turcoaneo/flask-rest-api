@@ -6,7 +6,7 @@ import {
     getRecipeIdFromElementId,
     getUpdateFormData,
     deepEqual,
-    resetTableRow,
+    resetTableRowForm,
     MISSING_ID,
     WEB_URL,
     IDLE_TIME_SEC,
@@ -21,12 +21,18 @@ import {
     COL_INGREDIENTS,
     COL_INSTRUCTIONS,
     RECIPE_ENDPOINT,
+    SPLITTER,
     submitButton,
     userInputElement,
-    SPLITTER,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
-import {getUserInput, setCellAndRecordPreviousValue, toggleButtons} from "./utils_update.js";
+import {
+    DISPLAY_BLOCK,
+    DISPLAY_NONE,
+    getUserInput,
+    setCellAndRecordPreviousValue,
+    toggleButtons
+} from "./utils_update.js";
 
 let searchId = MISSING_ID;
 let startTime = new Date().getTime();
@@ -40,14 +46,18 @@ window.onload = () => {
     enableCreateButtonEventListeners().then(() => console.log("Enable submit button event listeners created!"));
 }
 
+function onCLickHandlerDelete(deleteButton) {
+    return async () => {
+        searchId = getRecipeIdFromElementId(deleteButton);
+        // console.log("Delete button: ", searchId);
+        await deleteRecipe();
+    };
+}
+
 const createDeleteItemEventListener = async () => {
     const deleteButtonList = document.querySelectorAll('.recipe-delete');
     deleteButtonList.forEach(deleteButton => {
-        deleteButton.addEventListener('click', async () => {
-            searchId = getRecipeIdFromElementId(deleteButton);
-            // console.log("Delete button: ", searchId);
-            await deleteRecipe();
-        })
+        deleteButton.addEventListener('click', onCLickHandlerDelete(deleteButton))
     })
 }
 
@@ -181,54 +191,44 @@ const deleteRecipe = () => {
 function addOrClearFormDiv(addButton) {
     const divCreateForm = document.getElementById('div-create-form');
     if (addButton.innerText === BTN_PLUS) {
-        divCreateForm.style.display = "block";
+        divCreateForm.style.display = DISPLAY_BLOCK;
         addButton.innerText = BTN_MINUS;
     } else {
-        divCreateForm.style.display = "none";
+        divCreateForm.style.display = DISPLAY_NONE;
         addButton.innerText = BTN_PLUS;
     }
 }
 
+function onClickHandlerUpdate(updateButton) {
+    return async () => {
+        searchId = getRecipeIdFromElementId(updateButton);
+        // console.log("Update button: ", searchId);
+        const resultTable = document.getElementById("app-table-result");
+        const tableRowSize = resultTable.rows.length;
+        for (let i = 1; i < tableRowSize; i++) {
+            let row = resultTable.rows[i];
+            let prevObj = processRowForUpdate(row);
+            if (Object.keys(prevObj).length !== 0) {
+                const addNewBtn = document.getElementById(BTN_TEXT_ADD + ID_SEP + searchId);
+                toggleButtons(updateButton, addNewBtn);
+                createNewItemBtnEventListener(addNewBtn, updateButton, prevObj, row);
+                break;
+            }
+        }
+    };
+}
+
 function updateButtonListener(updateButtonList) {
     updateButtonList.forEach(updateButton => {
-        updateButton.addEventListener('click', async (evt) => {
-            evt.preventDefault();
-            searchId = getRecipeIdFromElementId(updateButton);
-            // console.log("Update button: ", searchId);
-            const resultTable = document.getElementById("app-table-result");
-            const tableRowSize = resultTable.rows.length;
-            for (let i = 1; i < tableRowSize; i++) {
-                let row = resultTable.rows[i];
-                let isProcessed = processRowForUpdate(row, updateButton);
-                if (isProcessed) {
-                    break;
-                }
-            }
-        })
+        updateButton.addEventListener('click', onClickHandlerUpdate(updateButton));
     })
 }
 
-function processRowForUpdate(row, updateButton) {
-    let rowId = getRecipeIdFromElementId(row);
-    let result = false;
-    if (searchId === rowId) {
-        // console.log("Tr: " + rowId);
-        const prevObj = {};
-        for (let j = 1; j < row.cells.length - 1; j++) {
-            let cell = row.cells[j];
-            setCellAndRecordPreviousValue(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj, SPLITTER);
+function onClickHandlerAdd(row, addNewBtn, updateButton, prevObj) {
+    return async () => {
+        if (addNewBtn.style.display === DISPLAY_NONE) {
+            return;
         }
-        const addNewBtn = document.getElementById(BTN_TEXT_ADD + ID_SEP + searchId);
-        toggleButtons(updateButton, addNewBtn);
-
-        createNewItemBtnEventListener(addNewBtn, updateButton, prevObj, row);
-        result = true;
-    }
-    return result;
-}
-
-function createNewItemBtnEventListener(addNewBtn, updateButton, prevObj, row) {
-    addNewBtn.addEventListener('click', async () => {
         const userInput = getUpdateFormData(
             getUserInput([COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS], EDIT_TEXTFIELD, ID_SEP));
         toggleButtons(addNewBtn, updateButton);
@@ -236,10 +236,28 @@ function createNewItemBtnEventListener(addNewBtn, updateButton, prevObj, row) {
         const hasNotChanged = deepEqual(newObj, prevObj);
         if (hasNotChanged) {
             console.log("Prev values not changed: ", prevObj);
-            resetTableRow(row, newObj, TD_ID_PREFIX, ID_SEP,
+            resetTableRowForm(row, newObj, TD_ID_PREFIX, ID_SEP,
                 [COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS]);
         } else {
             await updateRecipe(userInput);
         }
-    });
+    };
+}
+
+function createNewItemBtnEventListener(addNewBtn, updateButton, prevObj, row) {
+    addNewBtn.addEventListener('click', onClickHandlerAdd(row, addNewBtn, updateButton, prevObj));
+}
+
+function processRowForUpdate(row) {
+    let rowId = getRecipeIdFromElementId(row);
+    const prevObj = {};
+    if (searchId === rowId) {
+        // console.log("Tr: " + rowId);
+        for (let j = 1; j < row.cells.length - 1; j++) {
+            let cell = row.cells[j];
+            setCellAndRecordPreviousValue(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj,
+                SPLITTER, COL_INGREDIENTS);
+        }
+    }
+    return prevObj;
 }

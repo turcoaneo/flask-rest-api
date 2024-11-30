@@ -1,4 +1,6 @@
-export const setCellAndRecordPreviousValue = (cell, cellId, idSep, textfieldName, previousValues, splitter) => {
+export const DISPLAY_NONE = "none";
+export const DISPLAY_BLOCK = "block";
+export const setCellAndRecordPreviousValue = (cell, cellId, idSep, textfieldName, previousValues, splitter, colArray) => {
     const content = cell.innerText;
 
     // console.log("Td: ", content);
@@ -9,7 +11,7 @@ export const setCellAndRecordPreviousValue = (cell, cellId, idSep, textfieldName
     textField.innerText = content;
     cell.innerHTML = null;
     cell.appendChild(textField);
-    if (cellId === "ingredients") {
+    if (cellId === colArray) {
         previousValues[cellId] = content.split(splitter).map(function (item) {
             return item.trim();
         });
@@ -19,8 +21,8 @@ export const setCellAndRecordPreviousValue = (cell, cellId, idSep, textfieldName
 }
 
 export const toggleButtons = (visibleBtn, hiddenBtn) => {
-    visibleBtn.style.display = "none";
-    hiddenBtn.style.display = "block";
+    visibleBtn.style.display = DISPLAY_NONE;
+    hiddenBtn.style.display = DISPLAY_BLOCK;
 }
 
 export const getUserInput = (cols, editTextfield, idSep) => {

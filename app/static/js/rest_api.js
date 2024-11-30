@@ -1,11 +1,11 @@
-export const apiCall = async (id, WEB_URL, recipeEndpoint, methodType, requestBody) => {
-    let endpoint = WEB_URL + "" + recipeEndpoint;
+export const apiCall = async (id, webUrl, recipeEndpoint, methodType, requestBody) => {
+    let endpoint = webUrl + "" + recipeEndpoint;
     if (!!id) {
-        endpoint = `http://127.0.0.1:5000/recipe/${id}`;
+        endpoint = endpoint + "/" + `${id}`;
     }
     let init = {
         method: methodType, headers: new Headers({
-            'content-type': 'application/json', 'Access-Control-Allow-Origin': WEB_URL
+            'content-type': 'application/json', 'Access-Control-Allow-Origin': webUrl
         }), cache: 'no-cache'
     };
     if (!!requestBody) {
