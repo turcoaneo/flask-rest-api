@@ -1,4 +1,6 @@
-export const setCell = (cell, cellId, idSep, textfieldName, previousValues) => {
+export const DISPLAY_NONE = "none";
+export const DISPLAY_BLOCK = "block";
+export const setCellAndRecordPreviousValue = (cell, cellId, idSep, textfieldName, previousValues, splitter, colArray) => {
     const content = cell.innerText;
 
     // console.log("Td: ", content);
@@ -9,8 +11,8 @@ export const setCell = (cell, cellId, idSep, textfieldName, previousValues) => {
     textField.innerText = content;
     cell.innerHTML = null;
     cell.appendChild(textField);
-    if (cellId === "ingredients") {
-        previousValues[cellId] = content.split(",").map(function (item) {
+    if (cellId === colArray) {
+        previousValues[cellId] = content.split(splitter).map(function (item) {
             return item.trim();
         });
     } else {
@@ -18,21 +20,20 @@ export const setCell = (cell, cellId, idSep, textfieldName, previousValues) => {
     }
 }
 
-export const getUserInput = (setNewText) => {
+export const toggleButtons = (visibleBtn, hiddenBtn) => {
+    visibleBtn.style.display = DISPLAY_NONE;
+    hiddenBtn.style.display = DISPLAY_BLOCK;
+}
+
+export const getUserInput = (cols, editTextfield, idSep) => {
     let formMap = new Map();
-    setNewText(formMap, "name");
-    setNewText(formMap, "ingredients");
-    setNewText(formMap, "instructions");
+    setNewText(formMap, cols[0], editTextfield, idSep);
+    setNewText(formMap, cols[1], editTextfield, idSep);
+    setNewText(formMap, cols[2], editTextfield, idSep);
     return formMap;
 }
 
-export const toggleButtons = (visibleBtn, hiddenBtn) => {
-    visibleBtn.style.display = "none";
-    hiddenBtn.style.display = "block";
-}
 
-export const resetTableRow = (row, newObj, tdIdPrefix, idSep) => {
-    row.children[tdIdPrefix + idSep + "name"].innerText = newObj["name"];
-    row.children[tdIdPrefix + idSep + "ingredients"].innerText = newObj["ingredients"];
-    row.children[tdIdPrefix + idSep + "instructions"].innerText = newObj["instructions"];
+function setNewText(formMap, colName, editTextfield, idSep) {
+    formMap.set(colName, document.getElementById(editTextfield + idSep + colName).value);
 }

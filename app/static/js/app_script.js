@@ -1,33 +1,123 @@
 import {
-    buildAppTable, cleanTable, clearFormData, getCreateFormData, getRecipeIdFromElementId, getUpdateFormData, deepEqual,
-    MISSING_ID, WEB_URL, IDLE_TIME_SEC, APP_TIMEOUT_MILLI, ID_SEP, BTN_PLUS, BTN_MINUS, EDIT_TEXTFIELD,
-    recipeEndpoint, submitButton, userInputElement, TD_ID_PREFIX,
+    buildAppTable,
+    cleanTable,
+    clearFormData,
+    getCreateFormData,
+    getRecipeIdFromElementId,
+    getUpdateFormData,
+    deepEqual,
+    resetTableRowForm,
+    addOrClearFormDiv,
+    MISSING_ID,
+    WEB_URL,
+    IDLE_TIME_SEC,
+    APP_TIMEOUT_MILLI,
+    ID_SEP,
+    EDIT_TEXTFIELD,
+    BTN_TEXT_ADD,
+    TD_ID_PREFIX,
+    COL_NAME,
+    COL_INGREDIENTS,
+    COL_INSTRUCTIONS,
+    RECIPE_ENDPOINT,
+    SPLITTER,
+    submitButton,
+    userInputElement,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
-import {getUserInput, resetTableRow, setCell, toggleButtons} from "./utils_update.js";
+import {
+    DISPLAY_BLOCK,
+    DISPLAY_NONE,
+    getUserInput,
+    setCellAndRecordPreviousValue,
+    toggleButtons
+} from "./utils_update.js";
 
 let searchId = MISSING_ID;
 let startTime = new Date().getTime();
 
+
+window.onload = () => {
+    checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
+    createSearchItemEventListener().then(() => console.log("Search item event listener created!"));
+    createAddItemEventListener().then(() => console.log("Add item event listener created!"));
+    createBtnEnableFormEventListener().then(() => console.log("Plus-minus button item event listener created!"));
+    enableCreateButtonEventListeners().then(() => console.log("Enable submit button event listeners created!"));
+}
+
+const getItem = async (userInput) => {
+    let id = userInput.value;
+    const promise = apiCall(id, WEB_URL, RECIPE_ENDPOINT, "GET", null);
+    promise
+        .then((result) => {
+            cleanTable();
+            buildAppTable(result);
+            userInputElement.value = "";
+            createUpdateItemEventListener().then(() => console.log("Update item event listener created!"));
+            createDeleteItemEventListener().then(() => console.log("Delete button event listeners created!"));
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+        });
+}
+
+const getHelloWorld = async () => {
+    const promise = apiCall(null, WEB_URL, "hello", "GET", null);
+    promise
+        .then((result) => {
+            console.log(result);
+            document.getElementById("app-title").innerText = "Recipe form";
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+            document.getElementById("app-title").innerText = "Server not running";
+        });
+}
+
+const createRecipe = (userInput) => {
+    const promise = apiCall(null, WEB_URL, RECIPE_ENDPOINT, "POST", userInput);
+    promise
+        .then((result) => {
+            getItem("").then(() => console.log(result));
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+        });
+}
+
+const updateRecipe = (userInput) => {
+    // console.log(userInput);
+    const promise = apiCall(searchId, WEB_URL, RECIPE_ENDPOINT, "PUT", userInput);
+    promise
+        .then((result) => {
+            getItem("").then(() => console.log(result));
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+        });
+}
+
+const deleteRecipe = () => {
+    const promise = apiCall(searchId, WEB_URL, RECIPE_ENDPOINT, "DELETE", null);
+    promise
+        .then(() => {
+            getItem("").then(() => console.log("Re-fetching after delete"));
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+        });
+}
+
 const createDeleteItemEventListener = async () => {
     const deleteButtonList = document.querySelectorAll('.recipe-delete');
     deleteButtonList.forEach(deleteButton => {
-        deleteButton.addEventListener('click', async () => {
-            searchId = getRecipeIdFromElementId(deleteButton);
-            // console.log("Delete button: ", searchId);
-            await deleteRecipe();
-        })
+        deleteButton.addEventListener('click', onCLickHandlerDelete(deleteButton))
     })
 }
 
 const createUpdateItemEventListener = async () => {
     const updateButtonList = document.querySelectorAll(".recipe-edit");
-
-    function setNewText(formMap, id) {
-        formMap.set(id, document.getElementById(EDIT_TEXTFIELD + ID_SEP + id).value);
-    }
-
-    updateButtonListener(updateButtonList, setNewText);
+    updateButtonListener(updateButtonList);
 }
 
 const checkServerItemEventListener = async () => {
@@ -64,7 +154,7 @@ const createBtnEnableFormEventListener = async () => {
     const addButton = document.getElementById('toggle-show-create-form-button');
     addButton.addEventListener('click', async (evt) => {
         evt.preventDefault();
-        await addOrClearFormDiv(addButton);
+        addOrClearFormDiv(addButton, DISPLAY_BLOCK, DISPLAY_NONE);
     })
 }
 
@@ -89,121 +179,73 @@ const enableCreateButtonEventListeners = async () => {
     instructions.addEventListener('mouseout', updateSubmitBtn);
 }
 
-const getItem = async (userInput) => {
-    let id = userInput.value;
-    const promise = apiCall(id, WEB_URL, recipeEndpoint, "GET", null);
-    promise
-        .then((result) => {
-            cleanTable();
-            buildAppTable(result);
-            userInputElement.value = "";
-            createUpdateItemEventListener().then(() => console.log("Update item event listener created!"));
-            createDeleteItemEventListener().then(() => console.log("Delete button event listeners created!"));
-        })
-        .catch((error) => {
-            console.error(`Could not get result: ${error}`);
-        });
-}
-
-const getHelloWorld = async () => {
-    const promise = apiCall(null, WEB_URL, "hello", "GET", null);
-    promise
-        .then((result) => {
-            console.log(result);
-            document.getElementById("app-title").innerText = "Recipe form";
-        })
-        .catch((error) => {
-            console.error(`Could not get result: ${error}`);
-            document.getElementById("app-title").innerText = "Server not running";
-        });
-}
-
-const createRecipe = (userInput) => {
-    const promise = apiCall(null, WEB_URL, recipeEndpoint, "POST", userInput);
-    promise
-        .then((result) => {
-            getItem("").then(() => console.log(result));
-        })
-        .catch((error) => {
-            console.error(`Could not get result: ${error}`);
-        });
-}
-
-const updateRecipe = (userInput) => {
-    // console.log(userInput);
-    const promise = apiCall(searchId, WEB_URL, recipeEndpoint, "PUT", userInput);
-    promise
-        .then((result) => {
-            getItem("").then(() => console.log(result));
-        })
-        .catch((error) => {
-            console.error(`Could not get result: ${error}`);
-        });
-}
-
-const deleteRecipe = () => {
-    const promise = apiCall(searchId, WEB_URL, recipeEndpoint, "DELETE", null);
-    promise
-        .then(() => {
-            getItem("").then(() => console.log("Re-fetching after delete"));
-        })
-        .catch((error) => {
-            console.error(`Could not get result: ${error}`);
-        });
-}
-
-function addOrClearFormDiv(addButton) {
-    const divCreateForm = document.getElementById('div-create-form');
-    if (addButton.innerText === BTN_PLUS) {
-        divCreateForm.style.display = "block";
-        addButton.innerText = BTN_MINUS;
-    } else {
-        divCreateForm.style.display = "none";
-        addButton.innerText = BTN_PLUS;
-    }
-}
-
-function updateButtonListener(updateButtonList, setNewText) {
+function updateButtonListener(updateButtonList) {
     updateButtonList.forEach(updateButton => {
-        updateButton.addEventListener('click', async (evt) => {
-            evt.preventDefault();
-            searchId = getRecipeIdFromElementId(updateButton);
-            // console.log("Update button: ", searchId);
-            const resultTable = document.getElementById("app-table-result");
-            for (let i = 1; i < resultTable.rows.length; i++) {
-                let row = resultTable.rows[i];
-                let rowId = getRecipeIdFromElementId(row);
-                if (searchId === rowId) {
-                    // console.log("Tr: " + rowId);
-                    const prevObj = {};
-                    for (let j = 1; j < row.cells.length - 1; j++) {
-                        let cell = row.cells[j];
-                        setCell(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj);
-                    }
-                    const addNewBtn = document.getElementById("Add" + ID_SEP + searchId);
-                    toggleButtons(updateButton, addNewBtn);
-
-                    addNewBtn.addEventListener('click', async () => {
-                        const userInput = getUpdateFormData(getUserInput(setNewText));
-                        toggleButtons(addNewBtn, updateButton);
-                        const newObj = JSON.parse(userInput);
-                        if (deepEqual(newObj, prevObj)) {
-                            console.log("Prev values not changed: ", prevObj);
-                            resetTableRow(row, newObj, TD_ID_PREFIX, ID_SEP);
-                        } else {
-                            await updateRecipe(userInput);
-                        }
-                    });
-                }
-            }
-        })
+        updateButton.addEventListener('click', onClickHandlerUpdate(updateButton));
     })
 }
 
-window.onload = () => {
-    checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
-    createSearchItemEventListener().then(() => console.log("Search item event listener created!"));
-    createAddItemEventListener().then(() => console.log("Add item event listener created!"));
-    createBtnEnableFormEventListener().then(() => console.log("Plus-minus button item event listener created!"));
-    enableCreateButtonEventListeners().then(() => console.log("Enable submit button event listeners created!"));
+function createNewItemBtnEventListener(sendUpdateBtn, updateButton, prevObj, row) {
+    sendUpdateBtn.addEventListener('click', onClickHandlerAdd(row, sendUpdateBtn, updateButton, prevObj));
+}
+
+function onCLickHandlerDelete(deleteButton) {
+    return async () => {
+        searchId = getRecipeIdFromElementId(deleteButton);
+        // console.log("Delete button: ", searchId);
+        await deleteRecipe();
+    };
+}
+
+function onClickHandlerUpdate(updateButton) {
+    return async () => {
+        searchId = getRecipeIdFromElementId(updateButton);
+        // console.log("Update button: ", searchId);
+        const resultTable = document.getElementById("app-table-result");
+        const tableRowSize = resultTable.rows.length;
+        for (let i = 1; i < tableRowSize; i++) {
+            let row = resultTable.rows[i];
+            let prevObj = processRowForUpdate(row);
+            if (Object.keys(prevObj).length !== 0) {
+                const sendUpdateBtn = document.getElementById(BTN_TEXT_ADD + ID_SEP + searchId);
+                toggleButtons(updateButton, sendUpdateBtn);
+                createNewItemBtnEventListener(sendUpdateBtn, updateButton, prevObj, row);
+                break;
+            }
+        }
+    };
+}
+
+function onClickHandlerAdd(row, sendUpdateBtn, updateButton, prevObj) {
+    return async () => {
+        if (sendUpdateBtn.style.display === DISPLAY_NONE) {
+            return;
+        }
+        const userInput = getUpdateFormData(
+            getUserInput([COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS], EDIT_TEXTFIELD, ID_SEP));
+        toggleButtons(sendUpdateBtn, updateButton);
+        const newObj = JSON.parse(userInput);
+        const hasNotChanged = deepEqual(newObj, prevObj);
+        if (hasNotChanged) {
+            console.log("Prev values not changed: ", prevObj);
+            resetTableRowForm(row, newObj, TD_ID_PREFIX, ID_SEP,
+                [COL_NAME, COL_INGREDIENTS, COL_INSTRUCTIONS]);
+        } else {
+            await updateRecipe(userInput);
+        }
+    };
+}
+
+function processRowForUpdate(row) {
+    let rowId = getRecipeIdFromElementId(row);
+    const prevObj = {};
+    if (searchId === rowId) {
+        // console.log("Tr: " + rowId);
+        for (let j = 1; j < row.cells.length - 1; j++) {
+            let cell = row.cells[j];
+            setCellAndRecordPreviousValue(cell, getRecipeIdFromElementId(cell), ID_SEP, EDIT_TEXTFIELD, prevObj,
+                SPLITTER, COL_INGREDIENTS);
+        }
+    }
+    return prevObj;
 }
