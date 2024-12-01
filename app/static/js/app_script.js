@@ -31,7 +31,7 @@ const createUpdateItemEventListener = async () => {
 }
 
 const checkServerItemEventListener = async () => {
-    const checkingDiv = document.getElementById("div-two-actions");
+    const checkingDiv = document.getElementById("app");
     checkingDiv.addEventListener('mouseover', async () => {
         let stopTime = new Date().getTime();
         let elapsedTime = (stopTime - startTime) / 1000;
