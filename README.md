@@ -20,3 +20,5 @@ docker tag flask-repo:latest 509399624827.dkr.ecr.eu-north-1.amazonaws.com/flask
 aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 509399624827.dkr.ecr.eu-north-1.amazonaws.com
 
 docker push 509399624827.dkr.ecr.eu-north-1.amazonaws.com/flask-repo:latest
+
+aws ecs update-service --cluster cluster --service flask-service --force-new-deployment > app/resources/sample_update_service.json
