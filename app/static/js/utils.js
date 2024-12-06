@@ -1,4 +1,5 @@
-export const WEB_URL = "http://127.0.0.1:5000/";
+const PORT = "80";
+export const WEB_URL = "http://13.61.40.196:" + PORT + "/";
 export const RECIPE_ENDPOINT = "recipe";
 export const MISSING_ID = -1;
 export const IDLE_TIME_SEC = 30;
@@ -23,7 +24,7 @@ export const submitButton = document.getElementById("create-button");
 
 export const TD_ID_PREFIX = "td";
 
-export const addOrClearFormDiv = (addButton, showDivStyle, hideDivStyle)=> {
+export const addOrClearFormDiv = (addButton, showDivStyle, hideDivStyle) => {
     const divCreateForm = document.getElementById('div-create-form');
     if (addButton.innerText === BTN_PLUS) {
         divCreateForm.style.display = showDivStyle;
