@@ -6,3 +6,4 @@ flask_swagger
 flask_swagger_ui
 pipreqs
 gunicorn
+pymongo
