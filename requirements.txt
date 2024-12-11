@@ -1,0 +1,8 @@
+Flask==3.1.0
+flask_smorest==0.45.0
+flask_swagger==0.2.14
+flask_swagger_ui==4.11.1
+marshmallow==3.23.1
+pymongo==4.10.1
+python-dotenv
+gunicorn
