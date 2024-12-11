@@ -1,25 +1,29 @@
 #app {
     max-width: 800px;
+    min-width: 500px;
     font-family: monospace;
     letter-spacing: -0.5px;
+    font-size: 24px;
 }
 
 h1 {
     color: darkslategray;
     text-align: center;
-    letter-spacing: -2px;
+    letter-spacing: -0.1em;
     background-color: deepskyblue;
-    font-family: "Comic Sans MS", serif;
+    font-family: "Comic Sans MS", monospace;
+    font-size: 1em;
 }
 
 #app-table-result th {
-    font-size: 14px;
+    font-size: 1em;
 }
 
 #app-table-result td {
-    font-size: 12px;
+    font-size: 0.8em;
+    font-weight: bolder;
     color: darkslategray;
-    padding: 0 3px 0 6px;
+    padding: 0 0.15em 0 0.3em;
 }
 
 #app-table-result td:nth-child(2n+1) {
@@ -58,7 +62,13 @@ h1 {
 }
 
 .col-form-label {
-    font-size: 12px;
+    font-size: 0.8em;
+    letter-spacing: -0.05em;
+}
+
+.large-btn{
+    font-weight: bolder;
+    font-size: 0.8em;
 }
 
 @media only screen and (max-width: 600px) {

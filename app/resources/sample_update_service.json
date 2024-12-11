@@ -1,0 +1,360 @@
+{
+    "service": {
+        "serviceArn": "arn:aws:ecs:eu-north-1:509399624827:service/cluster/flask-service",
+        "serviceName": "flask-service",
+        "clusterArn": "arn:aws:ecs:eu-north-1:509399624827:cluster/cluster",
+        "loadBalancers": [
+            {
+                "targetGroupArn": "arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6",
+                "containerName": "flask-container",
+                "containerPort": 80
+            }
+        ],
+        "serviceRegistries": [],
+        "status": "ACTIVE",
+        "desiredCount": 1,
+        "runningCount": 1,
+        "pendingCount": 0,
+        "launchType": "FARGATE",
+        "platformVersion": "LATEST",
+        "platformFamily": "Linux",
+        "taskDefinition": "arn:aws:ecs:eu-north-1:509399624827:task-definition/flask-task:1",
+        "deploymentConfiguration": {
+            "deploymentCircuitBreaker": {
+                "enable": true,
+                "rollback": true
+            },
+            "maximumPercent": 200,
+            "minimumHealthyPercent": 100,
+            "alarms": {
+                "alarmNames": [],
+                "rollback": false,
+                "enable": false
+            }
+        },
+        "deployments": [
+            {
+                "id": "ecs-svc/2002386459258639460",
+                "status": "PRIMARY",
+                "taskDefinition": "arn:aws:ecs:eu-north-1:509399624827:task-definition/flask-task:1",
+                "desiredCount": 0,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 0,
+                "createdAt": "2024-12-06T14:54:49.688000+02:00",
+                "updatedAt": "2024-12-06T14:54:49.688000+02:00",
+                "launchType": "FARGATE",
+                "platformVersion": "1.4.0",
+                "platformFamily": "Linux",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-08f297bbbdda32894"
+                        ],
+                        "securityGroups": [
+                            "sg-04884d59d98c9f29c"
+                        ],
+                        "assignPublicIp": "ENABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/2002386459258639460 in progress."
+            },
+            {
+                "id": "ecs-svc/2331312207205738198",
+                "status": "ACTIVE",
+                "taskDefinition": "arn:aws:ecs:eu-north-1:509399624827:task-definition/flask-task:1",
+                "desiredCount": 1,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 0,
+                "createdAt": "2024-12-06T14:54:31.286000+02:00",
+                "updatedAt": "2024-12-06T14:54:35.135000+02:00",
+                "launchType": "FARGATE",
+                "platformVersion": "1.4.0",
+                "platformFamily": "Linux",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-08f297bbbdda32894"
+                        ],
+                        "securityGroups": [
+                            "sg-04884d59d98c9f29c"
+                        ],
+                        "assignPublicIp": "ENABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/2331312207205738198 in progress."
+            },
+            {
+                "id": "ecs-svc/1703891465530545549",
+                "status": "ACTIVE",
+                "taskDefinition": "arn:aws:ecs:eu-north-1:509399624827:task-definition/flask-task:1",
+                "desiredCount": 0,
+                "pendingCount": 0,
+                "runningCount": 1,
+                "failedTasks": 0,
+                "createdAt": "2024-12-06T14:50:26.893000+02:00",
+                "updatedAt": "2024-12-06T14:54:33.742000+02:00",
+                "launchType": "FARGATE",
+                "platformVersion": "1.4.0",
+                "platformFamily": "Linux",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-08f297bbbdda32894"
+                        ],
+                        "securityGroups": [
+                            "sg-04884d59d98c9f29c"
+                        ],
+                        "assignPublicIp": "ENABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/1703891465530545549 in progress."
+            },
+            {
+                "id": "ecs-svc/5013613282894485824",
+                "status": "ACTIVE",
+                "taskDefinition": "arn:aws:ecs:eu-north-1:509399624827:task-definition/flask-task:1",
+                "desiredCount": 0,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 0,
+                "createdAt": "2024-12-06T14:29:44.785000+02:00",
+                "updatedAt": "2024-12-06T14:54:35.152000+02:00",
+                "launchType": "FARGATE",
+                "platformVersion": "1.4.0",
+                "platformFamily": "Linux",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-08f297bbbdda32894"
+                        ],
+                        "securityGroups": [
+                            "sg-04884d59d98c9f29c"
+                        ],
+                        "assignPublicIp": "ENABLED"
+                    }
+                },
+                "rolloutState": "COMPLETED",
+                "rolloutStateReason": "ECS deployment ecs-svc/5013613282894485824 completed."
+            },
+            {
+                "id": "ecs-svc/9028590962509675713",
+                "status": "ACTIVE",
+                "taskDefinition": "arn:aws:ecs:eu-north-1:509399624827:task-definition/flask-task:1",
+                "desiredCount": 0,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 0,
+                "createdAt": "2024-12-06T14:52:41.774000+02:00",
+                "updatedAt": "2024-12-06T14:54:35.157000+02:00",
+                "launchType": "FARGATE",
+                "platformVersion": "1.4.0",
+                "platformFamily": "Linux",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-08f297bbbdda32894"
+                        ],
+                        "securityGroups": [
+                            "sg-04884d59d98c9f29c"
+                        ],
+                        "assignPublicIp": "ENABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/9028590962509675713 in progress."
+            }
+        ],
+        "roleArn": "arn:aws:iam::509399624827:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+        "events": [
+            {
+                "id": "ae80a5c1-c389-415b-a49a-28ac588d6b4d",
+                "createdAt": "2024-12-06T14:52:16.527000+02:00",
+                "message": "(service flask-service, taskSet ecs-svc/5013613282894485824) has begun draining connections on 1 tasks."
+            },
+            {
+                "id": "2b9c8a04-2aea-4904-95dc-f4a3a985fd02",
+                "createdAt": "2024-12-06T14:52:16.521000+02:00",
+                "message": "(service flask-service) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "27ddc734-0289-475f-a0cc-6201a50efe4a",
+                "createdAt": "2024-12-06T14:52:06.906000+02:00",
+                "message": "(service flask-service) has stopped 1 running tasks: (task b6c37514cc6640129761a5862d7492f8)."
+            },
+            {
+                "id": "66b4037a-ec62-4bb3-bf8a-6be491524ccf",
+                "createdAt": "2024-12-06T14:51:13.438000+02:00",
+                "message": "(service flask-service) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "e4085c79-1b8c-4983-8adb-83d86742d5a9",
+                "createdAt": "2024-12-06T14:50:42.103000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task a7b395a4a90843ec83084d45198036a9)."
+            },
+            {
+                "id": "5fc1a34a-bfb1-4456-a791-50bacac44823",
+                "createdAt": "2024-12-06T14:31:51.869000+02:00",
+                "message": "(service flask-service) has reached a steady state."
+            },
+            {
+                "id": "6760c712-7b6f-4466-9135-acaf37888188",
+                "createdAt": "2024-12-06T14:31:51.868000+02:00",
+                "message": "(service flask-service) (deployment ecs-svc/5013613282894485824) deployment completed."
+            },
+            {
+                "id": "6ce92fb6-cca9-49d6-921b-16f112aa98af",
+                "createdAt": "2024-12-06T14:30:34.884000+02:00",
+                "message": "(service flask-service) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "aeeda3a6-fa70-4a1e-b3cc-6e8df2be0b9a",
+                "createdAt": "2024-12-06T14:30:03.923000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task b6c37514cc6640129761a5862d7492f8)."
+            },
+            {
+                "id": "11ebbfb1-0b59-4787-93c4-5e0356580f04",
+                "createdAt": "2024-12-06T14:28:16.407000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 59afd19d60c74c5ebc57f227774e03ee)."
+            },
+            {
+                "id": "367521d7-df32-4e65-80a5-607a4af84c3a",
+                "createdAt": "2024-12-06T14:27:53.911000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 126ac4fc434e4e70ab0167230ddab3b2)."
+            },
+            {
+                "id": "41a90ff0-d020-4737-a3d3-a5cb5d5d9b8a",
+                "createdAt": "2024-12-06T14:22:16.777000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 84ae7bef23ae4bcd84c11936a939645e)."
+            },
+            {
+                "id": "57e011c2-c3cc-4903-b7ca-1c47669dd2e2",
+                "createdAt": "2024-12-06T14:16:44.501000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 619b773099674a048da8dfb2c60897bf)."
+            },
+            {
+                "id": "4403a1c1-5ef2-42d4-a9dd-4502ecb2f807",
+                "createdAt": "2024-12-06T14:11:02.849000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task f9fafece84f6458d942126aba075cd51)."
+            },
+            {
+                "id": "1a32ae25-ec09-49cb-8a19-df89b6b45b35",
+                "createdAt": "2024-12-06T14:09:57.920000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 9c63952147954239bffe91ed9dad5899)."
+            },
+            {
+                "id": "74db6784-ac80-4f35-ae33-780a04413ef4",
+                "createdAt": "2024-12-06T14:08:56.589000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task ed51ac75d01e4ccd85472043a0663fd1)."
+            },
+            {
+                "id": "b476e674-9bdb-4e82-b36d-3b7930c280c0",
+                "createdAt": "2024-12-06T14:07:56.394000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 30ccbfef76aa424fabad85c9d80c35e7)."
+            },
+            {
+                "id": "05a83032-de58-48a5-a8f7-7549dde79db8",
+                "createdAt": "2024-12-06T14:06:53.279000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task fe561bb289134acb867a964867b5ec37)."
+            },
+            {
+                "id": "e8bf0943-3d58-44f2-ab56-31a68257fad0",
+                "createdAt": "2024-12-06T14:05:51.586000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 4603162ab669438880cb3748a4cecbf2)."
+            },
+            {
+                "id": "64a77ade-4d84-4e6f-bcad-9e689236aefc",
+                "createdAt": "2024-12-06T14:04:58.593000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 2e67b64982a44e3dbcff030b5c254e36)."
+            },
+            {
+                "id": "ede470e6-270f-4c17-b8aa-f3064d26ca32",
+                "createdAt": "2024-12-06T14:03:57.046000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task fcf3622abd1f43ed8fcb9682851917de)."
+            },
+            {
+                "id": "1fb7a25a-67d1-48a1-9426-e7e1a100780f",
+                "createdAt": "2024-12-06T14:02:53.339000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task cd89afc538074c7d9e6266a5a7aa78f8)."
+            },
+            {
+                "id": "52837ead-0554-40f2-9998-41d52567d497",
+                "createdAt": "2024-12-06T14:01:51.379000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 081e98b80dde4ef082324bf07b8c306e)."
+            },
+            {
+                "id": "3388c117-241e-491b-a487-b37682804610",
+                "createdAt": "2024-12-06T14:00:48.613000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task b2bae175aa114ca9964c4ca14b7feaea)."
+            },
+            {
+                "id": "63f54f32-fa38-4794-ac21-f289440b3d3e",
+                "createdAt": "2024-12-06T13:59:42.832000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 1a8390bc5e884da4b50d278aadd08c42)."
+            },
+            {
+                "id": "963c3e79-80d7-46c8-9525-2faad5c10558",
+                "createdAt": "2024-12-06T13:58:36.268000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task 2ee152194a744807991e426af17862a8)."
+            },
+            {
+                "id": "789ce4b4-5ba9-4063-94e8-284649f7c6bf",
+                "createdAt": "2024-12-06T13:58:35.434000+02:00",
+                "message": "(service flask-service, taskSet ecs-svc/2308109184964702175) has begun draining connections on 1 tasks."
+            },
+            {
+                "id": "e4173fe3-6407-4d44-8d2f-b8583bf4aef4",
+                "createdAt": "2024-12-06T13:58:35.428000+02:00",
+                "message": "(service flask-service) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "d15db2aa-2dfe-4044-b4f8-d6736c9aae62",
+                "createdAt": "2024-12-06T12:06:35.554000+02:00",
+                "message": "(service flask-service) has reached a steady state."
+            },
+            {
+                "id": "c4f2862f-8aa8-4222-b79a-0620ce36bc74",
+                "createdAt": "2024-12-06T12:06:35.553000+02:00",
+                "message": "(service flask-service) (deployment ecs-svc/2308109184964702175) deployment completed."
+            },
+            {
+                "id": "6d7e5f97-71a4-47dd-b9fe-48c47143fa2a",
+                "createdAt": "2024-12-06T12:05:46.941000+02:00",
+                "message": "(service flask-service) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "663c5405-a832-4c11-9015-78ccba784667",
+                "createdAt": "2024-12-06T12:05:16.675000+02:00",
+                "message": "(service flask-service) has started 1 tasks: (task bf24d64ecfa04796af1370d1d3fdd5e7)."
+            }
+        ],
+        "createdAt": "2024-12-06T12:04:55.641000+02:00",
+        "placementConstraints": [],
+        "placementStrategy": [],
+        "networkConfiguration": {
+            "awsvpcConfiguration": {
+                "subnets": [
+                    "subnet-08f297bbbdda32894"
+                ],
+                "securityGroups": [
+                    "sg-04884d59d98c9f29c"
+                ],
+                "assignPublicIp": "ENABLED"
+            }
+        },
+        "healthCheckGracePeriodSeconds": 0,
+        "schedulingStrategy": "REPLICA",
+        "deploymentController": {
+            "type": "ECS"
+        },
+        "createdBy": "arn:aws:iam::509399624827:user/turcoaneo_user",
+        "enableECSManagedTags": true,
+        "propagateTags": "NONE",
+        "enableExecuteCommand": false,
+        "availabilityZoneRebalancing": "ENABLED"
+    }
+}

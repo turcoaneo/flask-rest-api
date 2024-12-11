@@ -39,7 +39,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/definitions/Recipe"
+                    "$ref": "#/components/schemas/Recipe"
                   }
                 }
               }
@@ -53,7 +53,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/definitions/RecipeUpdate"
+                "$ref": "#/components/schemas/RecipeUpdate"
               }
             }
           }
@@ -64,7 +64,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/definitions/Recipe"
+                  "$ref": "#/components/schemas/Recipe"
                 }
               }
             }
@@ -136,7 +136,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/definitions/Recipe"
+                  "$ref": "#/components/schemas/Recipe"
                 }
               }
             }
@@ -159,7 +159,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/definitions/RecipeUpdate"
+                "$ref": "#/components/schemas/RecipeUpdate"
               }
             }
           }
@@ -170,7 +170,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/definitions/Recipe"
+                  "$ref": "#/components/schemas/Recipe"
                 }
               }
             }
@@ -194,32 +194,34 @@
       }
     }
   },
-  "definitions": {
-    "Recipe": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "allOf": {
-          "$ref": "#/definitions/RecipeUpdate"
+  "components": {
+    "schemas": {
+      "Recipe": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "allOf": {
+            "$ref": "#/components/schemas/RecipeUpdate"
+          }
         }
-      }
-    },
-    "RecipeUpdate": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "ingredients": {
-          "type": "array",
-          "items": {
+      },
+      "RecipeUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "instructions": {
             "type": "string"
           }
-        },
-        "instructions": {
-          "type": "string"
         }
       }
     }

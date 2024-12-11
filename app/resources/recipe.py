@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from flask_smorest import Blueprint, abort
 from flask.views import MethodView
+from pymongo import MongoClient
 
 from app.schemas import RecipeSchema, RecipeUpdateSchema
 
@@ -13,7 +14,7 @@ blueprint = Blueprint("Recipe", "recipes", description="Operation in recipes")
 class Home(MethodView):
     @blueprint.response(200)
     def get(self):
-        return "Hello, World!"
+        return get_mongo_db()
 
 
 @blueprint.route("/recipe/<string:recipe_id>")
@@ -70,6 +71,15 @@ class RecipeList(MethodView):
         data.append(new_recipe)
         save_db({"recipes": data})
         return new_recipe
+
+
+def get_mongo_db():
+    try:
+        client = MongoClient('172.31.21.216', 27017)  # '13.60.89.19'
+        data = client.test.command('ping')
+    except Exception as e:
+        data = repr(e)
+    return data
 
 
 def open_db():
