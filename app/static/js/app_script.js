@@ -9,6 +9,7 @@ import {
     resetTableRowForm,
     addOrClearFormDiv,
     MISSING_ID,
+    WEB_URL_LOCAL,
     WEB_URL,
     IDLE_TIME_SEC,
     APP_TIMEOUT_MILLI,
@@ -35,9 +36,10 @@ import {
 
 let searchId = MISSING_ID;
 let startTime = new Date().getTime();
-
+let webUrl = WEB_URL;
 
 window.onload = () => {
+    getEnv().then(() => console.log("Got ENV!"));
     checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
     createSearchItemEventListener().then(() => console.log("Search item event listener created!"));
     createAddItemEventListener().then(() => console.log("Add item event listener created!"));
@@ -47,7 +49,7 @@ window.onload = () => {
 
 const getItem = async (userInput) => {
     let id = userInput.value;
-    const promise = apiCall(id, WEB_URL, RECIPE_ENDPOINT, "GET", null);
+    const promise = apiCall(id, webUrl, RECIPE_ENDPOINT, "GET", null);
     promise
         .then((result) => {
             cleanTable();
@@ -61,8 +63,29 @@ const getItem = async (userInput) => {
         });
 }
 
+const getEnv = async () => {
+    const promise = apiCall(null, webUrl, "hello", "GET", null);
+    promise
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+            webUrl = WEB_URL_LOCAL;
+            console.log("Switching to: ", webUrl);
+            const promise = apiCall(null, webUrl, "hello", "GET", null);
+            promise
+                .then((result) => {
+                    console.log(result);
+                })
+                .catch((error) => {
+                    console.error(`Could not get result: ${error}`);
+                });
+        });
+}
+
 const getHelloWorld = async () => {
-    const promise = apiCall(null, WEB_URL, "hello", "GET", null);
+    const promise = apiCall(null, webUrl, "hello", "GET", null);
     promise
         .then((result) => {
             console.log(result);
@@ -75,7 +98,7 @@ const getHelloWorld = async () => {
 }
 
 const createRecipe = (userInput) => {
-    const promise = apiCall(null, WEB_URL, RECIPE_ENDPOINT, "POST", userInput);
+    const promise = apiCall(null, webUrl, RECIPE_ENDPOINT, "POST", userInput);
     promise
         .then((result) => {
             getItem("").then(() => console.log(result));
@@ -87,7 +110,7 @@ const createRecipe = (userInput) => {
 
 const updateRecipe = (userInput) => {
     // console.log(userInput);
-    const promise = apiCall(searchId, WEB_URL, RECIPE_ENDPOINT, "PUT", userInput);
+    const promise = apiCall(searchId, webUrl, RECIPE_ENDPOINT, "PUT", userInput);
     promise
         .then((result) => {
             getItem("").then(() => console.log(result));
@@ -98,7 +121,7 @@ const updateRecipe = (userInput) => {
 }
 
 const deleteRecipe = () => {
-    const promise = apiCall(searchId, WEB_URL, RECIPE_ENDPOINT, "DELETE", null);
+    const promise = apiCall(searchId, webUrl, RECIPE_ENDPOINT, "DELETE", null);
     promise
         .then(() => {
             getItem("").then(() => console.log("Re-fetching after delete"));
