@@ -5,7 +5,7 @@ from flask.views import MethodView
 from pymongo import MongoClient
 
 from app.schemas import RecipeSchema, RecipeUpdateSchema
-from app.resources.db import mongoUri
+from app.resources.config import mongoUri
 
 blueprint = Blueprint("Recipe", "recipes", description="Operation in recipes")
 
@@ -17,7 +17,9 @@ recipe_collection = client.admin.recipe
 class Home(MethodView):
     @blueprint.response(200)
     def get(self):
-        return get_hello_db()
+        data = get_hello_db()
+        data["mongoUri"] = mongoUri
+        return data
 
 
 @blueprint.route("/recipe/<string:recipe_id>")

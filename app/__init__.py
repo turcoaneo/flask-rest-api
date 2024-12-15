@@ -3,7 +3,7 @@ from flask_smorest import Api
 from flask_swagger import swagger
 from flask_swagger_ui import get_swaggerui_blueprint
 
-from app.resources.db import init_db
+from app.resources.config import init_db
 from app.resources.recipe import blueprint as blp
 
 app = Flask(__name__)

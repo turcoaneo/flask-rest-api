@@ -2,9 +2,13 @@ import os
 
 from pymongo import MongoClient
 
-mongoUri = os.environ.get("MONGO_URI", default='13.51.136.85')
+env = os.environ.get("ENV", default='prod')
 
-client = MongoClient(mongoUri, 27017)
+mongoPort = 27017
+mongoConfigUri = "MONGO_URI_LOCAL" if env == "local" else "MONGO_URI"
+mongoUri = os.environ.get(mongoConfigUri, default='13.51.136.85')
+
+client = MongoClient(mongoUri, mongoPort)
 db = client["admin"]
 
 
@@ -18,7 +22,8 @@ def init_db():
             db_users = db.command('usersInfo')
     except Exception as e:
         db_users = repr(e)
-    print(f"{mongoUri}: {db_users}")
+    # noinspection PyTypeChecker
+    print(f"{env} - {mongoUri}:{mongoPort}, mongo main user: {db_users['users'][0]['_id']}")
 
 
 def grant_roles():
