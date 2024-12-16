@@ -4,8 +4,10 @@ FROM python:3.11.4-alpine3.18
 RUN pip install --upgrade pip
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-
+ENV PYTHONUNBUFFERED=1
+ENV environment='prod'
+ENV MONGO_URI='13.51.136.85'
 COPY . .
 
-#CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+#CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
 CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:app"]

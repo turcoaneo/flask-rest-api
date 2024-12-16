@@ -18,9 +18,11 @@ export const COL_NAME = "name";
 export const COL_INGREDIENTS = "ingredients";
 export const COL_INSTRUCTIONS = "instructions";
 export const SPLITTER = ",";
+export const DISPLAY_FLEX = "flex";
 
 export const userInputElement = document.getElementById("input-text");
 export const submitButton = document.getElementById("create-button");
+export const appTitle = document.getElementById("app-title");
 
 export const TD_ID_PREFIX = "td";
 

@@ -3,7 +3,7 @@ from flask_smorest import Api
 from flask_swagger import swagger
 from flask_swagger_ui import get_swaggerui_blueprint
 
-from app.resources.config import init_db
+from app.resources.utils import init_app
 from app.resources.recipe import blueprint as blp
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ app.config["API_VERSION"] = "v1"
 app.config["OPENAPI_VERSION"] = "3.0.3"
 app.config["OPENAPI_URL_PREFIX"] = "/"
 api = Api(app)
-init_db()
+init_app(app)
 
 
 @app.route('/')

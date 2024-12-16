@@ -22,8 +22,10 @@ import {
     COL_INSTRUCTIONS,
     RECIPE_ENDPOINT,
     SPLITTER,
+    DISPLAY_FLEX,
     submitButton,
     userInputElement,
+    appTitle,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
 import {
@@ -39,12 +41,40 @@ let startTime = new Date().getTime();
 let webUrl = WEB_URL;
 
 window.onload = () => {
-    getEnv().then(() => console.log("Got ENV!"));
-    checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
-    createSearchItemEventListener().then(() => console.log("Search item event listener created!"));
-    createAddItemEventListener().then(() => console.log("Add item event listener created!"));
-    createBtnEnableFormEventListener().then(() => console.log("Plus-minus button item event listener created!"));
-    enableCreateButtonEventListeners().then(() => console.log("Enable submit button event listeners created!"));
+    getEnvAndInitApp().then(() => console.log("Got ENV: ", webUrl));
+}
+
+const getEnvAndInitApp = async () => {
+    appTitle.innerText = "Loading ENV... Please wait!";
+    toggleDivsBeforeLoading(DISPLAY_NONE);
+    const promise = apiCall(null, webUrl, "hello", "GET", null);
+    promise
+        .then((result) => {
+            appTitle.innerText = "Recipe form";
+            toggleDivsBeforeLoading(DISPLAY_FLEX);
+            console.log(result);
+            initApp();
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+            webUrl = WEB_URL_LOCAL;
+            console.log("Switching to: ", webUrl);
+            const promise = apiCall(null, WEB_URL_LOCAL, "hello", "GET", null);
+            promise
+                .then((result) => {
+                    appTitle.innerText = "Recipe form";
+                    toggleDivsBeforeLoading(DISPLAY_FLEX);
+                    initApp();
+                    console.log(result);
+                })
+                .catch((error) => {
+                    console.error(`Could not get result: ${error}`);
+                });
+        });
+
+    function toggleDivsBeforeLoading(toggle) {
+        document.getElementById("div-two-actions").style.display = toggle;
+    }
 }
 
 const getItem = async (userInput) => {
@@ -60,40 +90,6 @@ const getItem = async (userInput) => {
         })
         .catch((error) => {
             console.error(`Could not get result: ${error}`);
-        });
-}
-
-const getEnv = async () => {
-    const promise = apiCall(null, webUrl, "hello", "GET", null);
-    promise
-        .then((result) => {
-            console.log(result);
-        })
-        .catch((error) => {
-            console.error(`Could not get result: ${error}`);
-            webUrl = WEB_URL_LOCAL;
-            console.log("Switching to: ", webUrl);
-            const promise = apiCall(null, webUrl, "hello", "GET", null);
-            promise
-                .then((result) => {
-                    console.log(result);
-                })
-                .catch((error) => {
-                    console.error(`Could not get result: ${error}`);
-                });
-        });
-}
-
-const getHelloWorld = async () => {
-    const promise = apiCall(null, webUrl, "hello", "GET", null);
-    promise
-        .then((result) => {
-            console.log(result);
-            document.getElementById("app-title").innerText = "Recipe form";
-        })
-        .catch((error) => {
-            console.error(`Could not get result: ${error}`);
-            document.getElementById("app-title").innerText = "Server not running";
         });
 }
 
@@ -152,7 +148,7 @@ const checkServerItemEventListener = async () => {
         if (elapsedTime > IDLE_TIME_SEC) {
             startTime = stopTime;
             console.log("Checking server as having been idle for: ", elapsedTime);
-            setTimeout(await getHelloWorld, APP_TIMEOUT_MILLI);
+            setTimeout(await checkServerRunning, APP_TIMEOUT_MILLI);
         }
     })
 }
@@ -271,4 +267,25 @@ function processRowForUpdate(row) {
         }
     }
     return prevObj;
+}
+
+const initApp = () => {
+    checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
+    createSearchItemEventListener().then(() => console.log("Search item event listener created!"));
+    createAddItemEventListener().then(() => console.log("Add item event listener created!"));
+    createBtnEnableFormEventListener().then(() => console.log("Plus-minus button item event listener created!"));
+    enableCreateButtonEventListeners().then(() => console.log("Enable submit button event listeners created!"));
+}
+
+const checkServerRunning = async () => {
+    const promise = apiCall(null, webUrl, "hello", "GET", null);
+    promise
+        .then((result) => {
+            console.log(result);
+            appTitle.innerText = "Recipe form";
+        })
+        .catch((error) => {
+            console.error(`Could not get result: ${error}`);
+            appTitle.innerText = "Server not running";
+        });
 }
