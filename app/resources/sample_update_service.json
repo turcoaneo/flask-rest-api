@@ -12,8 +12,8 @@
         ],
         "serviceRegistries": [],
         "status": "ACTIVE",
-        "desiredCount": 1,
-        "runningCount": 1,
+        "desiredCount": 0,
+        "runningCount": 0,
         "pendingCount": 0,
         "capacityProviderStrategy": [
             {
@@ -40,15 +40,15 @@
         },
         "deployments": [
             {
-                "id": "ecs-svc/4401459726609085559",
+                "id": "ecs-svc/4164424783760995504",
                 "status": "PRIMARY",
                 "taskDefinition": "arn:aws:ecs:eu-north-1:509399624827:task-definition/task-flask:1",
                 "desiredCount": 0,
                 "pendingCount": 0,
                 "runningCount": 0,
                 "failedTasks": 0,
-                "createdAt": "2024-12-13T21:52:15.246000+02:00",
-                "updatedAt": "2024-12-13T21:52:15.246000+02:00",
+                "createdAt": "2024-12-16T17:40:31.469000+02:00",
+                "updatedAt": "2024-12-16T17:40:31.469000+02:00",
                 "capacityProviderStrategy": [
                     {
                         "capacityProvider": "FARGATE",
@@ -70,7 +70,7 @@
                     }
                 },
                 "rolloutState": "IN_PROGRESS",
-                "rolloutStateReason": "ECS deployment ecs-svc/4401459726609085559 in progress.",
+                "rolloutStateReason": "ECS deployment ecs-svc/4164424783760995504 in progress.",
                 "serviceConnectConfiguration": {
                     "enabled": true,
                     "namespace": "arn:aws:servicediscovery:eu-north-1:509399624827:namespace/ns-irmafq5dkdnrcrlo",
@@ -79,54 +79,15 @@
                 "serviceConnectResources": []
             },
             {
-                "id": "ecs-svc/2974437081244266246",
+                "id": "ecs-svc/1362422561786782234",
                 "status": "ACTIVE",
-                "taskDefinition": "arn:aws:ecs:eu-north-1:509399624827:task-definition/task-flask:1",
-                "desiredCount": 1,
-                "pendingCount": 0,
-                "runningCount": 1,
-                "failedTasks": 0,
-                "createdAt": "2024-12-13T21:43:52.666000+02:00",
-                "updatedAt": "2024-12-13T21:45:47.990000+02:00",
-                "capacityProviderStrategy": [
-                    {
-                        "capacityProvider": "FARGATE",
-                        "weight": 1,
-                        "base": 0
-                    }
-                ],
-                "platformVersion": "1.4.0",
-                "platformFamily": "Linux",
-                "networkConfiguration": {
-                    "awsvpcConfiguration": {
-                        "subnets": [
-                            "subnet-08f297bbbdda32894"
-                        ],
-                        "securityGroups": [
-                            "sg-04884d59d98c9f29c"
-                        ],
-                        "assignPublicIp": "ENABLED"
-                    }
-                },
-                "rolloutState": "IN_PROGRESS",
-                "rolloutStateReason": "ECS deployment ecs-svc/2974437081244266246 in progress.",
-                "serviceConnectConfiguration": {
-                    "enabled": true,
-                    "namespace": "arn:aws:servicediscovery:eu-north-1:509399624827:namespace/ns-irmafq5dkdnrcrlo",
-                    "services": []
-                },
-                "serviceConnectResources": []
-            },
-            {
-                "id": "ecs-svc/0283124151113752007",
-                "status": "DRAINING",
                 "taskDefinition": "arn:aws:ecs:eu-north-1:509399624827:task-definition/task-flask:1",
                 "desiredCount": 0,
                 "pendingCount": 0,
                 "runningCount": 0,
                 "failedTasks": 0,
-                "createdAt": "2024-12-13T15:08:17.398000+02:00",
-                "updatedAt": "2024-12-13T21:46:07.295000+02:00",
+                "createdAt": "2024-12-15T19:20:51.150000+02:00",
+                "updatedAt": "2024-12-15T19:24:21.740000+02:00",
                 "capacityProviderStrategy": [
                     {
                         "capacityProvider": "FARGATE",
@@ -148,7 +109,7 @@
                     }
                 },
                 "rolloutState": "COMPLETED",
-                "rolloutStateReason": "ECS deployment ecs-svc/0283124151113752007 completed.",
+                "rolloutStateReason": "ECS deployment ecs-svc/1362422561786782234 completed.",
                 "serviceConnectConfiguration": {
                     "enabled": true,
                     "namespace": "arn:aws:servicediscovery:eu-north-1:509399624827:namespace/ns-irmafq5dkdnrcrlo",
@@ -159,6 +120,236 @@
         ],
         "roleArn": "arn:aws:iam::509399624827:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
         "events": [
+            {
+                "id": "07b72601-2eb9-49cd-b1b5-1960d16a3d7f",
+                "createdAt": "2024-12-16T13:25:19.294000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "65c77629-c8cc-48c9-b1c5-a28b486fb4fd",
+                "createdAt": "2024-12-16T07:24:51.436000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "37ccc3f1-191a-4de4-b699-5dd81ccc523f",
+                "createdAt": "2024-12-16T01:24:37.152000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "ef9b67b6-e436-4472-aa6d-f0e8fd13d800",
+                "createdAt": "2024-12-15T19:24:21.750000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "8fd2fd98-882a-4a9e-b9bf-3d23f0f412e3",
+                "createdAt": "2024-12-15T19:24:21.734000+02:00",
+                "message": "(service service-recipe, taskSet ecs-svc/1362422561786782234) has begun draining connections on 1 tasks."
+            },
+            {
+                "id": "8f7c9c86-f99a-4795-84d9-14d391b6cf72",
+                "createdAt": "2024-12-15T19:24:21.728000+02:00",
+                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "2ca86cad-93d0-41af-a500-9198abd36eb6",
+                "createdAt": "2024-12-15T19:24:11.653000+02:00",
+                "message": "(service service-recipe) has stopped 1 running tasks: (task af9f6199ddc24373abd8e4486ad5bdc5)."
+            },
+            {
+                "id": "c539ac3b-c22c-4a12-9968-ecb141719bdc",
+                "createdAt": "2024-12-15T19:23:56.259000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "eebf51fc-8551-46be-b9e5-5c11142f271e",
+                "createdAt": "2024-12-15T19:23:56.258000+02:00",
+                "message": "(service service-recipe) (deployment ecs-svc/1362422561786782234) deployment completed."
+            },
+            {
+                "id": "c9fec584-c618-456d-b0d7-ce773f331759",
+                "createdAt": "2024-12-15T19:22:56.598000+02:00",
+                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "e6ad36b6-efbf-42ff-a521-160aa63cdad4",
+                "createdAt": "2024-12-15T19:22:15.988000+02:00",
+                "message": "(service service-recipe) has started 1 tasks: (task af9f6199ddc24373abd8e4486ad5bdc5)."
+            },
+            {
+                "id": "5c6834bf-a374-40e8-bcdb-00e862eedcbf",
+                "createdAt": "2024-12-15T19:17:50.479000+02:00",
+                "message": "(service service-recipe, taskSet ecs-svc/3006026127820453417) has begun draining connections on 1 tasks."
+            },
+            {
+                "id": "34a7278b-dfad-4ee2-8bf6-3844262f6670",
+                "createdAt": "2024-12-15T19:17:40.376000+02:00",
+                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "1f60caa0-22f3-43ea-b154-62d4c91854db",
+                "createdAt": "2024-12-15T19:17:30.385000+02:00",
+                "message": "(service service-recipe) stopped 1 pending tasks."
+            },
+            {
+                "id": "f4d68dec-afbc-44ed-acfa-df83aefd79a9",
+                "createdAt": "2024-12-15T19:17:30.310000+02:00",
+                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "4035b58a-2abf-46e2-8e39-5c251403b8dd",
+                "createdAt": "2024-12-15T19:17:00.501000+02:00",
+                "message": "(service service-recipe, taskSet ecs-svc/3006026127820453417) has begun draining connections on 1 tasks."
+            },
+            {
+                "id": "5a94931c-d044-4e47-8ed0-633b6824c15d",
+                "createdAt": "2024-12-15T19:17:00.496000+02:00",
+                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "c0989235-6fc6-4fd0-9d15-0fbfb1a6fb56",
+                "createdAt": "2024-12-15T19:16:50.960000+02:00",
+                "message": "(service service-recipe) has started 1 tasks: (task bc15c22be2074f1eac86b95d47936d19)."
+            },
+            {
+                "id": "5000631a-7f50-45a0-8ff2-d4bcdc2a5607",
+                "createdAt": "2024-12-15T19:16:21.534000+02:00",
+                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "85b70440-665c-4fae-a7d8-515c8cd49ccb",
+                "createdAt": "2024-12-15T19:15:41.242000+02:00",
+                "message": "(service service-recipe) has started 1 tasks: (task 6c20596803394cb0bf039a9a2c39d015)."
+            },
+            {
+                "id": "36133e53-dea3-482a-8c03-f9b728bb7e6b",
+                "createdAt": "2024-12-15T17:23:55.703000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "ca719cd0-e16f-466d-8b52-ac4fbd73129a",
+                "createdAt": "2024-12-15T11:23:55.539000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "4a8fcbdc-9190-402a-bde0-ee4d62febc25",
+                "createdAt": "2024-12-15T11:23:55.525000+02:00",
+                "message": "(service service-recipe, taskSet ecs-svc/5955140929159796065) has begun draining connections on 1 tasks."
+            },
+            {
+                "id": "9bb06bf0-0c35-45d1-bb4d-86fca6162c38",
+                "createdAt": "2024-12-15T11:23:55.520000+02:00",
+                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "fc84f928-66d0-4ed1-ad87-678e90443a5f",
+                "createdAt": "2024-12-15T11:23:44.576000+02:00",
+                "message": "(service service-recipe) has stopped 1 running tasks: (task 9b0c759cba4f49419bd18363b2aad704)."
+            },
+            {
+                "id": "35e49d04-58d9-4be8-b5ba-fdff144de8ee",
+                "createdAt": "2024-12-15T11:22:23.320000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "3560a9be-1aa6-4391-a19c-0af46e0c2b26",
+                "createdAt": "2024-12-15T11:21:42.220000+02:00",
+                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "c2eb86a6-4a7a-4f82-bbc5-4c41849343de",
+                "createdAt": "2024-12-15T11:20:58.947000+02:00",
+                "message": "(service service-recipe) has started 1 tasks: (task 9b0c759cba4f49419bd18363b2aad704)."
+            },
+            {
+                "id": "74ba9b19-43e9-4394-b643-71322acd008c",
+                "createdAt": "2024-12-15T11:00:30.962000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "eb146ed0-b49c-4651-8556-9172d61d89f0",
+                "createdAt": "2024-12-15T11:00:30.961000+02:00",
+                "message": "(service service-recipe) (deployment ecs-svc/5955140929159796065) deployment completed."
+            },
+            {
+                "id": "78ee7f3e-5c4a-4a72-a669-7c10cfe6c094",
+                "createdAt": "2024-12-15T06:57:20.766000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "7330df95-1270-4de2-b21b-c62eaf21ce46",
+                "createdAt": "2024-12-15T00:57:00.279000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "f6fc3f45-f0fe-4a36-9220-28288a681a0d",
+                "createdAt": "2024-12-15T00:57:00.263000+02:00",
+                "message": "(service service-recipe, taskSet ecs-svc/4401459726609085559) has begun draining connections on 1 tasks."
+            },
+            {
+                "id": "2ac5969a-2ef1-465e-82a7-94bdd1ee4e80",
+                "createdAt": "2024-12-15T00:57:00.258000+02:00",
+                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "fd975841-8341-4438-bfe1-b666d67ccb78",
+                "createdAt": "2024-12-15T00:56:49.769000+02:00",
+                "message": "(service service-recipe) has stopped 1 running tasks: (task 2a6babbc72e24b40b2eba5af97abafd7)."
+            },
+            {
+                "id": "739d4d5f-a45c-4cce-9107-66913adf6a98",
+                "createdAt": "2024-12-14T22:02:08.212000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "1e835cdd-d316-4b1b-9bf8-02343c69cc60",
+                "createdAt": "2024-12-14T16:02:04.776000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "be484668-a96c-4ac7-ac25-728efa5623db",
+                "createdAt": "2024-12-14T10:01:24.658000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "2e2f2139-f75d-4874-aa3e-04b1ec1578da",
+                "createdAt": "2024-12-14T04:00:57.403000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "5a7bc531-948e-45a9-9408-5e9a9c8ad59e",
+                "createdAt": "2024-12-13T22:00:56.047000+02:00",
+                "message": "(service service-recipe) has reached a steady state."
+            },
+            {
+                "id": "a119843f-ad75-4796-96d1-36fc1b26a577",
+                "createdAt": "2024-12-13T22:00:56.046000+02:00",
+                "message": "(service service-recipe) (deployment ecs-svc/4401459726609085559) deployment completed."
+            },
+            {
+                "id": "dc597b96-64d0-4527-a052-efb1fc4e43ab",
+                "createdAt": "2024-12-13T21:54:13.335000+02:00",
+                "message": "(service service-recipe, taskSet ecs-svc/2974437081244266246) has begun draining connections on 1 tasks."
+            },
+            {
+                "id": "8d65c4fa-9039-4730-a82b-e4a952ad731a",
+                "createdAt": "2024-12-13T21:54:13.330000+02:00",
+                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "87e9b9a3-7f5c-4039-993e-844f57a1743b",
+                "createdAt": "2024-12-13T21:54:03.309000+02:00",
+                "message": "(service service-recipe) has stopped 1 running tasks: (task 1b2fd9c401a443569749998aeed1bc39)."
+            },
+            {
+                "id": "57921ea9-6e6e-41df-9933-ee1a58767dd6",
+                "createdAt": "2024-12-13T21:53:18.293000+02:00",
+                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
+            },
+            {
+                "id": "97061281-a900-4654-99eb-189b5d1ef7e3",
+                "createdAt": "2024-12-13T21:52:27.437000+02:00",
+                "message": "(service service-recipe) has started 1 tasks: (task 2a6babbc72e24b40b2eba5af97abafd7)."
+            },
             {
                 "id": "e30258cf-1fc7-47fa-87b7-55cb386805ac",
                 "createdAt": "2024-12-13T21:45:58.093000+02:00",
@@ -423,236 +614,6 @@
                 "id": "8e4c6ec4-03fd-4963-ad95-fed2b5af86de",
                 "createdAt": "2024-12-12T13:01:16.166000+02:00",
                 "message": "(service service-recipe, taskSet ecs-svc/3662121316019334087) has begun draining connections on 1 tasks."
-            },
-            {
-                "id": "d0a7228a-107f-467a-aa52-fb57d6f8e1b1",
-                "createdAt": "2024-12-12T13:01:16.161000+02:00",
-                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "76e0c579-30a8-44cd-b159-04e725c5215e",
-                "createdAt": "2024-12-12T13:00:29.331000+02:00",
-                "message": "(service service-recipe) has reached a steady state."
-            },
-            {
-                "id": "72de8a52-6207-4e83-8402-f4d175575a07",
-                "createdAt": "2024-12-12T13:00:29.330000+02:00",
-                "message": "(service service-recipe) (deployment ecs-svc/3662121316019334087) deployment completed."
-            },
-            {
-                "id": "c7394483-133c-4c19-acb4-748b6b1e764e",
-                "createdAt": "2024-12-12T12:59:38.596000+02:00",
-                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "ec138480-d3ef-464a-9390-df4b054b2011",
-                "createdAt": "2024-12-12T12:58:58.915000+02:00",
-                "message": "(service service-recipe) has started 1 tasks: (task f50072d9bf3f47b28b5a6414dec0b9b5)."
-            },
-            {
-                "id": "c1919420-57cb-4f3e-838c-e4038a103c5f",
-                "createdAt": "2024-12-12T12:53:43.815000+02:00",
-                "message": "(service service-recipe, taskSet ecs-svc/3662121316019334087) has begun draining connections on 1 tasks."
-            },
-            {
-                "id": "3dce0e50-a9a3-4a6f-930b-94cb381044a0",
-                "createdAt": "2024-12-12T12:53:43.810000+02:00",
-                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "ccdaa2b4-2f58-4fce-8347-ed9d9645dccb",
-                "createdAt": "2024-12-12T12:53:25.987000+02:00",
-                "message": "(service service-recipe, taskSet ecs-svc/5578192769281579305) has begun draining connections on 1 tasks."
-            },
-            {
-                "id": "db929f78-2b51-4aef-8c31-df871736bd50",
-                "createdAt": "2024-12-12T12:53:25.981000+02:00",
-                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "a7f97d0f-2efd-4763-ad48-f3daf11121c2",
-                "createdAt": "2024-12-12T12:53:15.144000+02:00",
-                "message": "(service service-recipe) has stopped 1 running tasks: (task ad73fbe417b7420bb660d811c7e08e79)."
-            },
-            {
-                "id": "2efbf82a-5132-49b1-af07-e1ce1e257ba7",
-                "createdAt": "2024-12-12T12:52:32.921000+02:00",
-                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "9e6374bb-d681-4364-827f-79fc6906c2ce",
-                "createdAt": "2024-12-12T12:51:52.738000+02:00",
-                "message": "(service service-recipe) has started 1 tasks: (task 157d681bda84488bb6733d4432e66aa7)."
-            },
-            {
-                "id": "8704310d-f237-47a3-8c52-e05047f16f09",
-                "createdAt": "2024-12-12T11:24:05.262000+02:00",
-                "message": "(service service-recipe) has reached a steady state."
-            },
-            {
-                "id": "80737aef-90a1-4ca0-a92c-8bcff1ba593f",
-                "createdAt": "2024-12-12T05:23:48.104000+02:00",
-                "message": "(service service-recipe) has reached a steady state."
-            },
-            {
-                "id": "ee709383-872a-4ba1-b5bb-7a10f1db503a",
-                "createdAt": "2024-12-11T23:23:13.546000+02:00",
-                "message": "(service service-recipe) has reached a steady state."
-            },
-            {
-                "id": "93b8fd10-6619-404f-9b9f-3daef69332ae",
-                "createdAt": "2024-12-11T17:22:45.666000+02:00",
-                "message": "(service service-recipe) has reached a steady state."
-            },
-            {
-                "id": "976cba39-d0dc-45f0-8533-7792dec60607",
-                "createdAt": "2024-12-11T11:22:39.801000+02:00",
-                "message": "(service service-recipe) has reached a steady state."
-            },
-            {
-                "id": "c13b86bc-617f-48ce-96e1-28bdf326f107",
-                "createdAt": "2024-12-11T11:22:39.800000+02:00",
-                "message": "(service service-recipe) (deployment ecs-svc/5578192769281579305) deployment completed."
-            },
-            {
-                "id": "24254ac3-26c1-476a-949c-614db546e8dd",
-                "createdAt": "2024-12-11T11:16:04.093000+02:00",
-                "message": "(service service-recipe, taskSet ecs-svc/6065047658047175571) has begun draining connections on 1 tasks."
-            },
-            {
-                "id": "23b0f67b-efab-4956-9e46-31263ccf96ed",
-                "createdAt": "2024-12-11T11:16:04.089000+02:00",
-                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "8132e43c-4e85-4506-9a62-15e89bc42eff",
-                "createdAt": "2024-12-11T11:15:53.741000+02:00",
-                "message": "(service service-recipe) has stopped 1 running tasks: (task 0e743b87bbd5465e87c1572d9f4ff99f)."
-            },
-            {
-                "id": "be23b359-6523-4999-ab95-7854cd721cae",
-                "createdAt": "2024-12-11T11:15:11.579000+02:00",
-                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "be8d4ef6-53df-475e-8c17-243b8ef85886",
-                "createdAt": "2024-12-11T11:14:31.003000+02:00",
-                "message": "(service service-recipe) has started 1 tasks: (task ad73fbe417b7420bb660d811c7e08e79)."
-            },
-            {
-                "id": "8921d30e-71b7-4700-9550-90df80dd51f8",
-                "createdAt": "2024-12-11T11:08:00.097000+02:00",
-                "message": "(service service-recipe, taskSet ecs-svc/5629381417147496637) has begun draining connections on 1 tasks."
-            },
-            {
-                "id": "75b7eb16-0fa4-435c-b996-70ef874c4d4e",
-                "createdAt": "2024-12-11T11:08:00.092000+02:00",
-                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "88f2cbe0-a502-4947-a183-ef83e08d394a",
-                "createdAt": "2024-12-11T11:07:50.373000+02:00",
-                "message": "(service service-recipe) has stopped 1 running tasks: (task 229c93fe647c4af49dc396251246a261)."
-            },
-            {
-                "id": "45fad01e-562d-41b2-a785-a5a6d91be3a6",
-                "createdAt": "2024-12-11T11:07:08.315000+02:00",
-                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "eb69ccb4-b617-4b82-a798-1e90e3d66be3",
-                "createdAt": "2024-12-11T11:06:25.519000+02:00",
-                "message": "(service service-recipe) has started 1 tasks: (task 0e743b87bbd5465e87c1572d9f4ff99f)."
-            },
-            {
-                "id": "8f465dea-a1a8-4f0e-ba6c-0898a508a73b",
-                "createdAt": "2024-12-11T10:52:37.340000+02:00",
-                "message": "(service service-recipe) has reached a steady state."
-            },
-            {
-                "id": "befb2f4b-2a8a-4d42-b2c5-ff31688049ce",
-                "createdAt": "2024-12-11T10:52:37.339000+02:00",
-                "message": "(service service-recipe) (deployment ecs-svc/5629381417147496637) deployment completed."
-            },
-            {
-                "id": "474208d3-e786-43b6-8479-26afaf1c0580",
-                "createdAt": "2024-12-11T10:45:44.543000+02:00",
-                "message": "(service service-recipe, taskSet ecs-svc/6790843516458740814) has begun draining connections on 1 tasks."
-            },
-            {
-                "id": "7f7d27eb-5036-4cda-8f25-1ff99ade7df4",
-                "createdAt": "2024-12-11T10:45:44.538000+02:00",
-                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "67df6de5-9598-4c79-98da-945d2d71963e",
-                "createdAt": "2024-12-11T10:45:34.890000+02:00",
-                "message": "(service service-recipe) has stopped 1 running tasks: (task 3ea9df8a698c4a25940bc84a9ea1dc41)."
-            },
-            {
-                "id": "b14121f1-017c-48c1-b047-82b81ab17f09",
-                "createdAt": "2024-12-11T10:44:54.637000+02:00",
-                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "6276db1c-77d6-403d-a19f-a794550b790f",
-                "createdAt": "2024-12-11T10:44:14.564000+02:00",
-                "message": "(service service-recipe) has started 1 tasks: (task 229c93fe647c4af49dc396251246a261)."
-            },
-            {
-                "id": "36f96eea-57f6-40ec-bd28-0aa4d3e71ab8",
-                "createdAt": "2024-12-11T10:20:48.779000+02:00",
-                "message": "(service service-recipe) has reached a steady state."
-            },
-            {
-                "id": "1667b276-031b-45ca-9a19-364b454978a2",
-                "createdAt": "2024-12-11T10:20:48.778000+02:00",
-                "message": "(service service-recipe) (deployment ecs-svc/6790843516458740814) deployment completed."
-            },
-            {
-                "id": "d15e0be9-7525-45e1-bccf-08d0416d9cdd",
-                "createdAt": "2024-12-11T10:14:04.503000+02:00",
-                "message": "(service service-recipe, taskSet ecs-svc/4138546227069358351) has begun draining connections on 1 tasks."
-            },
-            {
-                "id": "0c023410-52ff-41b1-b2bd-3f4d81b7de25",
-                "createdAt": "2024-12-11T10:14:04.497000+02:00",
-                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "aab9d256-9f6c-41e6-831f-e5520dd01e7d",
-                "createdAt": "2024-12-11T10:13:55.116000+02:00",
-                "message": "(service service-recipe) has stopped 1 running tasks: (task f2fc153954ca48d58b62efbc8ae78f50)."
-            },
-            {
-                "id": "11cd17d9-ad78-42d9-9579-6dbc8977baa3",
-                "createdAt": "2024-12-11T10:13:12.351000+02:00",
-                "message": "(service service-recipe) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
-            },
-            {
-                "id": "de63e8d6-e270-400d-97dd-67001bab55cb",
-                "createdAt": "2024-12-11T10:12:31.558000+02:00",
-                "message": "(service service-recipe) has started 1 tasks: (task 3ea9df8a698c4a25940bc84a9ea1dc41)."
-            },
-            {
-                "id": "058ae7bb-6a6c-429f-aba7-72089f2eb93a",
-                "createdAt": "2024-12-11T10:11:36.758000+02:00",
-                "message": "(service service-recipe) has reached a steady state."
-            },
-            {
-                "id": "a68dd16b-58c8-468d-9a69-391a600e65d7",
-                "createdAt": "2024-12-11T10:11:36.757000+02:00",
-                "message": "(service service-recipe) (deployment ecs-svc/4138546227069358351) deployment completed."
-            },
-            {
-                "id": "30b77ee0-59c7-4c40-a9e8-d37dff6420a1",
-                "createdAt": "2024-12-11T10:04:55.468000+02:00",
-                "message": "(service service-recipe, taskSet ecs-svc/2745173019962168611) has begun draining connections on 1 tasks."
-            },
-            {
-                "id": "5aad2977-9711-41c5-a715-7b3b906674d7",
-                "createdAt": "2024-12-11T10:04:55.464000+02:00",
-                "message": "(service service-recipe) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-north-1:509399624827:targetgroup/Target-load-balancer/65516828bfdb12c6)"
             }
         ],
         "createdAt": "2024-12-09T18:02:31.702000+02:00",

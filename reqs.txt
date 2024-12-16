@@ -4,6 +4,7 @@ flask_smorest
 python-dotenv
 flask_swagger
 flask_swagger_ui
+flask_cors
 pipreqs
 gunicorn
 pymongo

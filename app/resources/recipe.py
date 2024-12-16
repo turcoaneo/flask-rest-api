@@ -5,7 +5,7 @@ from flask.views import MethodView
 from pymongo import MongoClient
 
 from app.schemas import RecipeSchema, RecipeUpdateSchema
-from app.resources.config import mongoUri
+from app.resources.utils import mongoUri, get_hello_db
 
 blueprint = Blueprint("Recipe", "recipes", description="Operation in recipes")
 
@@ -68,10 +68,3 @@ class RecipeList(MethodView):
         recipe_collection.insert_one(new_recipe)
         return new_recipe
 
-
-def get_hello_db():
-    try:
-        data = client.test.command('ping')
-    except Exception as e:
-        data = repr(e)
-    return data

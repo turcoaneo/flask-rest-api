@@ -1,8 +1,10 @@
 import os
+import logging
+from flask_cors import CORS
 
 from pymongo import MongoClient
 
-env = os.environ.get("ENV", default='prod')
+env = os.environ.get("environment", default='prod')
 
 mongoPort = 27017
 mongoConfigUri = "MONGO_URI_LOCAL" if env == "local" else "MONGO_URI"
@@ -10,20 +12,44 @@ mongoUri = os.environ.get(mongoConfigUri, default='13.51.136.85')
 
 client = MongoClient(mongoUri, mongoPort)
 db = client["admin"]
+global logger
 
 
-def init_db():
+def init_app(app):
+    enable_cors_for_local_docker(app)
+    global logger
+    logger = app.logger
+    logger.setLevel(logging.INFO)
+    logger.info(f"{env} - {mongoUri}:{mongoPort}")
+    get_db_users(app)
+
+
+def get_hello_db():
+    try:
+        data = client.test.command('ping')
+        logger.info(f"{env} - {mongoUri}:{mongoPort}")
+    except Exception as e:
+        data = repr(e)
+    return data
+
+
+def get_db_users(app):
     try:
         db_users = db.command('usersInfo')
+        app.logger.info(f"DB users: {db_users}")
         if not db_users["users"]:
             create_user()
             grant_roles()
             insert_test()
             db_users = db.command('usersInfo')
+            app.logger.info(f"DB users: {db_users}")
     except Exception as e:
-        db_users = repr(e)
-    # noinspection PyTypeChecker
-    print(f"{env} - {mongoUri}:{mongoPort}, mongo main user: {db_users['users'][0]['_id']}")
+        app.logger.error(repr(e))
+
+
+def enable_cors_for_local_docker(app):
+    if env == 'local':
+        CORS(app)
 
 
 def grant_roles():
