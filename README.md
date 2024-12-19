@@ -1,5 +1,5 @@
 # flask-rest-api
-Learning Flask and AWS with python
+Learning Flask and Docker on AWS Fargate with Vanilla JS, HTML, and CSS. Swagger also.
 
 ## install
 venv\Scripts\activate
