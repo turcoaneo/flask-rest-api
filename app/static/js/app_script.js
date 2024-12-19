@@ -26,6 +26,7 @@ import {
     submitButton,
     userInputElement,
     appTitle,
+    imgSrcRootFolder,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
 import {
@@ -83,7 +84,7 @@ const getItem = async (userInput) => {
     promise
         .then((result) => {
             cleanTable();
-            buildAppTable(result);
+            buildAppTable(result, imgSrcRootFolder);
             userInputElement.value = "";
             createUpdateItemEventListener().then(() => console.log("Update item event listener created!"));
             createDeleteItemEventListener().then(() => console.log("Delete button event listeners created!"));

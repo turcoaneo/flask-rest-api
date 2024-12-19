@@ -25,6 +25,7 @@ export const submitButton = document.getElementById("create-button");
 export const appTitle = document.getElementById("app-title");
 
 export const TD_ID_PREFIX = "td";
+export const imgSrcRootFolder = "../static/icons/";
 
 export const addOrClearFormDiv = (addButton, showDivStyle, hideDivStyle) => {
     const divCreateForm = document.getElementById('div-create-form');
@@ -72,14 +73,14 @@ export const getCreateFormData = () => {
     return getFormData(form);
 }
 
-export const buildAppTable = (results) => {
+export const buildAppTable = (results, imageRoot) => {
     let table = document.getElementById('app-table-result');
     if (results instanceof Array) {
         results.forEach(result => {
-            processResult(result, table);
+            processResult(result, table, imageRoot);
         })
     } else {
-        processResult(results, table);
+        processResult(results, table, imageRoot);
     }
 }
 
@@ -126,7 +127,7 @@ export const resetTableRowForm = (row, newObj, tdIdPrefix, idSep, cols) => {
     row.children[tdIdPrefix + idSep + cols[2]].innerText = newObj[cols[2]];
 }
 
-const processResult = (result, table) => {
+const processResult = (result, table, imageRoot) => {
     let row = document.createElement('tr');
     row.classList.add("app-row");
     const resultId = result["id"];
@@ -135,7 +136,7 @@ const processResult = (result, table) => {
     setCols(result, row, TD_ID_PREFIX);
 
     let colActions = document.createElement('td');
-    colActions.append(ul_buttons(resultId));
+    colActions.append(ul_buttons(resultId, imageRoot));
     row.appendChild(colActions);
 
     table.appendChild(row);
@@ -152,15 +153,15 @@ const processResult = (result, table) => {
     }
 }
 
-const ul_buttons = (id) => {
+const ul_buttons = (id, imageRoot) => {
     let btnList = document.createElement("ul");
     btnList.classList.add("list-inline");
     btnList.classList.add("m-1");
     btnList.setAttribute("id", "ul-buttons" + ID_SEP + id);
 
-    createLi(createBtn(id, BTN_TEXT_ADD, "../static/icons/table.svg"));
-    createLi(createBtn(id, BTN_TEXT_EDIT, "../static/icons/pencil-square.svg"));
-    createLi(createBtn(id, BTN_TEXT_DELETE, "../static/icons/trash.svg"));
+    createLi(createBtn(id, BTN_TEXT_ADD, imageRoot + "table.svg"));
+    createLi(createBtn(id, BTN_TEXT_EDIT, imageRoot + "pencil-square.svg"));
+    createLi(createBtn(id, BTN_TEXT_DELETE, imageRoot + "trash.svg"));
 
     return btnList;
 
