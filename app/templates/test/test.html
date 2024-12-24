@@ -22,6 +22,8 @@
     </div>
 </div>
 <div><h2>Test DOM</h2>
+    <div id="app-title"></div>
+    <div id="div-two-actions"></div>
     <table data-test-id="test-div-table" id="app-table-result">
         <thead>
         <tr>
@@ -44,9 +46,13 @@
         </thead>
     </table>
     <div>Test <span style="font-weight: bold">table items</span>: <span id="id-test-table-items"></span>
+        <div>Test <span style="font-weight: bold">load app with mocked api call</span>: <span
+                id="id-test-load-app"></span></div>
+        <div>Test <span style="font-weight: bold">check async loading</span>: <span id="id-test-load-async-dom"></span>
+        </div>
+        <div>Test <span style="font-weight: bold">check failing</span>: <span id="id-test-fail-dom"></span></div>
     </div>
 </div>
-
 <script type="module" src="../../static/js/utils.js"></script>
 <script type="module" src="../../static/js/test/test_suite.js"></script>
 <script type="module" src="../../static/js/test/test_method.js"></script>
