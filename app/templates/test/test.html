@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Runner</title>
+    <link rel="stylesheet" href="test.css">
+</head>
+<body class="test">
+<h1>Test page</h1>
+<div><h2>Test methods</h2>
+    <div>Test context: <span id="id-test-context"></span></div>
+    <div>Test <span style="font-weight: bold">deep equal scalar</span>: <span id="id-test-deep-equal-scalar"></span>
+    </div>
+    <div>Test <span style="font-weight: bold">deep not equal scalar</span>: <span
+            id="id-test-deep-not-equal-scalar"></span>
+    </div>
+    <div>Test <span style="font-weight: bold">deep equal object</span>: <span id="id-test-deep-equal-object"></span>
+    </div>
+    <div>Test <span style="font-weight: bold">deep not equal object</span>: <span
+            id="id-test-deep-not-equal-object"></span>
+    </div>
+</div>
+<div><h2>Test DOM</h2>
+    <div id="app-title"></div>
+    <div id="div-two-actions"></div>
+    <table data-test-id="test-div-table" id="app-table-result">
+        <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Ingredients
+            </th>
+            <th>
+                Instructions
+            </th>
+            <th class="th-actions">
+                Actions
+            </th>
+        </tr>
+        </thead>
+    </table>
+    <div>Test <span style="font-weight: bold">table items</span>: <span id="id-test-table-items"></span>
+        <div>Test <span style="font-weight: bold">load app with mocked api call</span>: <span
+                id="id-test-load-app"></span></div>
+        <div>Test <span style="font-weight: bold">check async loading</span>: <span id="id-test-load-async-dom"></span>
+        </div>
+        <div>Test <span style="font-weight: bold">check failing</span>: <span id="id-test-fail-dom"></span></div>
+    </div>
+</div>
+<script type="module" src="../../static/js/utils.js"></script>
+<script type="module" src="../../static/js/test/test_suite.js"></script>
+<script type="module" src="../../static/js/test/test_method.js"></script>
+<script type="module" src="../../static/js/test/test_dom.js"></script>
+<script type="module" src="../../static/js/test/test_utils.js"></script>
+</body>
+</html>

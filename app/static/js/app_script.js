@@ -26,6 +26,7 @@ import {
     submitButton,
     userInputElement,
     appTitle,
+    imgSrcRootFolder,
 } from "./utils.js";
 import {apiCall} from "./rest_api.js";
 import {
@@ -41,36 +42,35 @@ let startTime = new Date().getTime();
 let webUrl = WEB_URL;
 
 window.onload = () => {
-    getEnvAndInitApp().then(() => console.log("Got ENV: ", webUrl));
+    const promise = apiCall(null, webUrl, "hello", "GET", null);
+    const retryPromise = apiCall(null, WEB_URL_LOCAL, "hello", "GET", null);
+    getEnvAndInitApp(promise, retryPromise, initApp).then(() => console.log("Got ENV: ", webUrl));
 }
 
-const getEnvAndInitApp = async () => {
+export const getEnvAndInitApp = async (promise, retryPromise, init_fn) => {
     appTitle.innerText = "Loading ENV... Please wait!";
     toggleDivsBeforeLoading(DISPLAY_NONE);
-    const promise = apiCall(null, webUrl, "hello", "GET", null);
-    promise
-        .then((result) => {
-            appTitle.innerText = "Recipe form";
-            toggleDivsBeforeLoading(DISPLAY_FLEX);
-            console.log(result);
-            initApp();
-        })
+    promise.then((result) => {
+        loadApp(result, init_fn);
+    })
         .catch((error) => {
             console.error(`Could not get result: ${error}`);
             webUrl = WEB_URL_LOCAL;
             console.log("Switching to: ", webUrl);
-            const promise = apiCall(null, WEB_URL_LOCAL, "hello", "GET", null);
-            promise
-                .then((result) => {
-                    appTitle.innerText = "Recipe form";
-                    toggleDivsBeforeLoading(DISPLAY_FLEX);
-                    initApp();
-                    console.log(result);
-                })
+            retryPromise.then((result) => {
+                loadApp(result, init_fn);
+            })
                 .catch((error) => {
                     console.error(`Could not get result: ${error}`);
                 });
         });
+
+    function loadApp(result, init_fn) {
+        appTitle.innerText = "Recipe form";
+        toggleDivsBeforeLoading(DISPLAY_FLEX);
+        init_fn();
+        // console.log(result);
+    }
 
     function toggleDivsBeforeLoading(toggle) {
         document.getElementById("div-two-actions").style.display = toggle;
@@ -83,7 +83,7 @@ const getItem = async (userInput) => {
     promise
         .then((result) => {
             cleanTable();
-            buildAppTable(result);
+            buildAppTable(result, imgSrcRootFolder);
             userInputElement.value = "";
             createUpdateItemEventListener().then(() => console.log("Update item event listener created!"));
             createDeleteItemEventListener().then(() => console.log("Delete button event listeners created!"));
@@ -139,7 +139,7 @@ const createUpdateItemEventListener = async () => {
     updateButtonListener(updateButtonList);
 }
 
-const checkServerItemEventListener = async () => {
+const checkServerItemEventListener = async (promiseHello) => {
     const checkingDiv = document.getElementById("app");
     checkingDiv.addEventListener('mouseover', async () => {
         let stopTime = new Date().getTime();
@@ -148,7 +148,7 @@ const checkServerItemEventListener = async () => {
         if (elapsedTime > IDLE_TIME_SEC) {
             startTime = stopTime;
             console.log("Checking server as having been idle for: ", elapsedTime);
-            setTimeout(await checkServerRunning, APP_TIMEOUT_MILLI);
+            setTimeout(await checkServerRunning, APP_TIMEOUT_MILLI, promiseHello);
         }
     })
 }
@@ -270,15 +270,15 @@ function processRowForUpdate(row) {
 }
 
 const initApp = () => {
-    checkServerItemEventListener().then(() => console.log("Server check event listener created!"));
+    const promiseHello = apiCall(null, webUrl, "hello", "GET", null);
+    checkServerItemEventListener(promiseHello).then(() => console.log("Server check event listener created!"));
     createSearchItemEventListener().then(() => console.log("Search item event listener created!"));
     createAddItemEventListener().then(() => console.log("Add item event listener created!"));
     createBtnEnableFormEventListener().then(() => console.log("Plus-minus button item event listener created!"));
     enableCreateButtonEventListeners().then(() => console.log("Enable submit button event listeners created!"));
 }
 
-const checkServerRunning = async () => {
-    const promise = apiCall(null, webUrl, "hello", "GET", null);
+const checkServerRunning = async (promise) => {
     promise
         .then((result) => {
             console.log(result);
