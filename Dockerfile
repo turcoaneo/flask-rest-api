@@ -6,7 +6,7 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 ENV PYTHONUNBUFFERED=1
 ENV environment='prod'
-ENV MONGO_URI='13.51.136.85'
+ENV MONGO_URI='13.61.144.29'
 COPY . .
 
 #CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
