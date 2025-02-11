@@ -1,5 +1,5 @@
 export const WEB_URL_LOCAL = "http://127.0.0.1:5000/";
-export const WEB_URL = "http://13.61.40.196:80/";
+export const WEB_URL = "http://13.51.185.168:80/";
 export const RECIPE_ENDPOINT = "recipe";
 export const MISSING_ID = -1;
 export const IDLE_TIME_SEC = 30;

@@ -8,7 +8,7 @@ env = os.environ.get("environment", default='prod')
 
 mongoPort = 27017
 mongoConfigUri = "MONGO_URI_LOCAL" if env == "local" else "MONGO_URI"
-mongoUri = os.environ.get(mongoConfigUri, default='13.51.136.85')
+mongoUri = os.environ.get(mongoConfigUri, default='13.61.144.29')
 
 client = MongoClient(mongoUri, mongoPort)
 db = client["admin"]
