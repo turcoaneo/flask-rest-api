@@ -4,11 +4,11 @@ from flask_cors import CORS
 
 from pymongo import MongoClient
 
-env = os.environ.get("environment", default='prod')
+env = os.environ.get("ENVIRONMENT", default='prod')
 
 mongoPort = 27017
 mongoConfigUri = "MONGO_URI_LOCAL" if env == "local" else "MONGO_URI"
-mongoUri = os.environ.get(mongoConfigUri, default='13.61.144.29')
+mongoUri = os.environ.get(mongoConfigUri, default='13.61.151.249')
 
 client = MongoClient(mongoUri, mongoPort)
 db = client["admin"]
